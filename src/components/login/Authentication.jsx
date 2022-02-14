@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useLocation, Navigate, Outlet, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,13 +11,16 @@ export default function Authentication(props) {
     return parsedUser || "";
   });
 
+  useEffect(()=>{
+    localStorage.setItem('user', JSON.stringify(user))
+  },[user])
+
   const login = async (newUser, callback) => {
-      axios.get('https://gameable-api.herokuapp.com/api/user/all')
+      await axios.get('https://gameable-api.herokuapp.com/api/user/all')
         .then(response=>{
           if(response.data.responseCode === 200){
             response.data.data.forEach(user=>{
               if(user.username === newUser.username && user.password === newUser.password){
-                localStorage.setItem('user', JSON.stringify(user));
                 setUser(user);
                 callback(user); 
               }

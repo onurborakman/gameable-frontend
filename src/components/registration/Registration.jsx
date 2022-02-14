@@ -4,21 +4,17 @@ import axios from 'axios';
 
 export default function Registration() {
 
-  const [username, setUsername] = useState();
-  const [firstname, setFirstname] = useState();
-  const [lastname, setLastname] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
+  const [username, setUsername] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   
   let navigate = useNavigate();
 
 
-  const register = (newUser, callback) => {
-    axios.put('https://gameable-api.herokuapp.com/api/user/create', newUser)
-      .then(response=>{
-        callback(response)
-      })
+  const register = async (newUser) => {
+    await axios.put('https://gameable-api.herokuapp.com/api/user/create', newUser)
   }
 
   const handleRegistration = (e) => {
@@ -30,39 +26,19 @@ export default function Registration() {
       email: email,
       password: password
     }
-    register(user, response=>{
-      console.log(response);
-      navigate('/login');
-    })
+    register(user)
+    navigate('/login');
     
   }
 
-  const handleUsername = (e) => {
-    e.preventDefault();
-    setUsername(e.target.value);
-  }
-
-  const handleFirstname = (e) => {
-    e.preventDefault();
-    setFirstname(e.target.value);
-  }
-
-  const handleLastname = (e) => {
-    e.preventDefault();
-    setLastname(e.target.value);
-  }
-
-  const handleEmail = (e) => {
-    e.preventDefault();
-    setEmail(e.target.value);
-  }
-
-  const handlePassword = (e) => {
-    e.preventDefault();
-    setPassword(e.target.value);
-  }
+  const handleUsername = (e) => {e.preventDefault();setUsername(e.target.value);}
+  const handleFirstname = (e) => {e.preventDefault();setFirstname(e.target.value);}
+  const handleLastname = (e) => {e.preventDefault();setLastname(e.target.value);}
+  const handleEmail = (e) => {e.preventDefault();setEmail(e.target.value);}
+  const handlePassword = (e) => {e.preventDefault();setPassword(e.target.value);}
 
   return (
+    <>
     <div className='form'>
       <h2>Registration</h2>
       <form onSubmit={handleRegistration}>
@@ -89,5 +65,6 @@ export default function Registration() {
       <button type='submit'><span>Register</span></button>
       </form>
     </div>
+    </>
   );
 }

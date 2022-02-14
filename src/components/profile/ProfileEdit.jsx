@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import { useAuth } from '../components/login/Authentication';
+import { useAuth } from '../login/Authentication';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function ProfileEdit() {
-    let auth = useAuth();
-    let navigate = useNavigate();
+  let auth = useAuth();
+  let navigate = useNavigate();
   const [username, setUsername] = useState(auth.user.username);
   const [firstname, setFirstname] = useState(auth.user.firstname);
   const [lastname, setLastname] = useState(auth.user.lastname);
@@ -14,18 +14,15 @@ export default function ProfileEdit() {
   const [games, setGames] = useState(auth.user.games);
   const [languages, setLanguages] = useState(auth.user.languages);
   const [personalities, setPersonalities] = useState(auth.user.personalities);
-  const [profiles, setProfiles] = useState(auth.user.profiles);
   const [teams, setTeams] = useState(auth.user.teams);
   const [password, setPassword] = useState(auth.user.password);
+  const [steam, setSteam] = useState(auth.user.profiles[0] || '');
 
-  const edit = async(updatedUser, callback) => {
-    axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser)
-        .then(response => {
-            callback(response);
-        })
+  const edit = async(updatedUser) => {
+    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser)
   }
 
-  const handleEdit = async(e) => {
+  const handleEdit = (e) => {
     e.preventDefault();
     let user = {
         username: username,
@@ -36,29 +33,15 @@ export default function ProfileEdit() {
         games: games,
         languages: languages,
         personalities: personalities,
-        profiles: profiles,
+        profiles: [
+          steam
+        ],
         teams: teams,
         password: password
     }
-    edit(user, (response=>{
-        console.log(response)
-        let update = {
-            id: auth.user.id,
-            username: username,
-            firstname: firstname,
-            lastname: lastname,
-            email: email,
-            bio: bio,
-            games: games,
-            languages: languages,
-            personalities: personalities,
-            profiles: profiles,
-            teams: teams,
-            password: password
-        }
-        auth.setUser(update)
-        localStorage.setItem('user', JSON.stringify(update));
-    }));
+    edit(user)
+    auth.setUser(user);
+    navigate('/profile');
   }
 
   const handleUsername = (e) => {e.preventDefault();setUsername(e.target.value);}
@@ -69,7 +52,7 @@ export default function ProfileEdit() {
   const handleGames = (e) => {e.preventDefault();setGames(e.target.value);}
   const handleLanguages = (e) => {e.preventDefault();setLanguages(e.target.value);}
   const handlePersonalities = (e) => {e.preventDefault();setPersonalities(e.target.value);}
-  const handleProfiles = (e) => {e.preventDefault();setProfiles(e.target.value);}
+  const handleSteam = (e) => {e.preventDefault();setSteam(e.target.value);}
   const handleTeams = (e) => {e.preventDefault();setTeams(e.target.value);}
   const handlePassword = (e) => {e.preventDefault();setPassword(e.target.value);}
 
@@ -95,7 +78,7 @@ export default function ProfileEdit() {
       </label>
       <label>
         Bio
-        <input type="text" value={bio} onChange={handleBio}/>
+        <textarea value={bio} onChange={handleBio}/>
       </label>
       <label>
         Games
@@ -110,8 +93,9 @@ export default function ProfileEdit() {
         <input type="text" value={personalities} onChange={handlePersonalities}/>
       </label>
       <label>
-        Profiles
-        <input type="text" value={profiles} onChange={handleProfiles}/>
+        Profiles:
+        Steam URL:
+        <input type="text" value={steam} onChange={handleSteam}/>
       </label>
       <label>
         Teams
