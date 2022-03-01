@@ -120,11 +120,9 @@ export function AuthNavbar(){
             <li className='nav-li'>
               <Link to="/profile">{auth.user.username}</Link>
             </li>
-            <li className='nav-li'>
               <button
                 onClick={()=>auth.logout(()=>navigate("/"))}
-              >Log out</button>
-            </li>
+               className='button logout-button'><span>Log out</span></button>
           </div>
           </div>
       </ul>

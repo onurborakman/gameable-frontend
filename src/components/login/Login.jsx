@@ -41,7 +41,7 @@ export default function Login() {
         Password
         <input type="password" onChange={handlePassword}/>
       </label>
-      <button type='submit'><span>Login</span></button>
+      <button type='submit' className='button form-button'><span>Login</span></button>
     </form>
   </div>
   );

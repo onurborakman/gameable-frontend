@@ -62,7 +62,7 @@ export default function Registration() {
         Password
         <input type="password" onChange={handlePassword}/>
       </label>
-      <button type='submit'><span>Register</span></button>
+      <button type='submit' className='button form-button'><span>Register</span></button>
       </form>
     </div>
     </>

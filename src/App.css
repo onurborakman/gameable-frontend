@@ -1,3 +1,9 @@
+textarea{
+    resize: none;
+    width: 25vw;
+    height: auto;
+}
+
 .nav-ul {
     list-style-type: none;
     margin: 0;
@@ -79,10 +85,6 @@ form label input{
 }
 button{
     display: block;
-    margin-top: 10%;
-    margin-bottom: 10%;
-    width: 25%;
-    border-radius: 4px;
     border: none;
     text-align: center;
     color: #ffffff;
@@ -115,4 +117,41 @@ button:hover span{
 button:hover span:after{
     opacity: 1;
     right: 0;
+}
+
+.button{
+    height: 100%;
+    width: 25%;
+}
+
+.form-button{
+    margin: 10%;
+}
+
+.logout-button{
+    width: 100%;
+}
+
+.profiles{
+    display: flex;
+}
+
+.profile-page{
+    width: 75vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.flex-column{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.flex-row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
 }
