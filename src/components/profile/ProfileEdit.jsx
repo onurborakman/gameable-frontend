@@ -7,6 +7,7 @@ import Languages from './edit-components/Languages';
 import Games from './edit-components/Games';
 import Teams from './edit-components/Teams';
 import Questions from './edit-components/Questions';
+import Nationality from './edit-components/Nationality';
 
 export default function ProfileEdit() {
   let auth = useAuth();
@@ -16,7 +17,9 @@ export default function ProfileEdit() {
   const [firstname, setFirstname] = useState(auth.user.firstname);
   const [lastname, setLastname] = useState(auth.user.lastname);
   const [email, setEmail] = useState(auth.user.email);
-  const [bio, setBio] = useState(auth.user.bio);
+  const [bio, setBio] = useState(auth.user.bio || '');
+  const [nationality, setNationality] = useState(auth.user.nationality || '');
+  const [birthdate, setBirthdate] = useState(auth.user.birthdate || '');
   const [languages, setLanguages] = useState(auth.user.languages || []);
   const [password, setPassword] = useState(auth.user.password);
   const [games, setGames] = useState(auth.user.games || []);
@@ -66,6 +69,8 @@ export default function ProfileEdit() {
         games: games,
         languages: languages,
         personalities: questions,
+        nationality: nationality,
+        birthdate: birthdate,
         profiles: [
           steam,
           discord,
@@ -81,7 +86,6 @@ export default function ProfileEdit() {
     }
     edit(user)
     auth.setUser(user);
-    console.log(auth.user);
     navigate('/profile');
   }
 
@@ -91,6 +95,7 @@ export default function ProfileEdit() {
   const handleEmail = (e) => {e.preventDefault();setEmail(e.target.value);}
   const handleBio = (e) => { e.preventDefault(); setBio(e.target.value); }
   const handlePassword = (e) => { e.preventDefault(); setPassword(e.target.value); }
+  const handleBirthdate = (e) => {e.preventDefault(); setBirthdate(e.target.value);}
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* LANGUAGES */
   const handlePrimaryLanguage = (e) => {
@@ -107,6 +112,17 @@ export default function ProfileEdit() {
     handlePrimaryLanguage: handlePrimaryLanguage,
     handleSecondayLanguage: handleSecondaryLanguage,
     languages: languages
+  }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /* NATIONALITY */
+  const handleNationality = (e) => {
+    e.preventDefault();
+    const result = e.target.value;
+    setNationality(result);
+  }
+  const nationalityProps = {
+    nationality: nationality,
+    handleNationality: handleNationality
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* PROFILES */
@@ -208,10 +224,16 @@ export default function ProfileEdit() {
         Email
         <input type="email" value={email} onChange={handleEmail}/>
       </label>
+        <Nationality {...nationalityProps} />
+        <label>
+          Birthdate
+          <input type='date' value={birthdate} onChange={handleBirthdate}/>
+        </label>
       <label>
         Bio
         <textarea value={bio} onChange={handleBio}/>
       </label>
+
         
         <Languages {...languageProps}/>
         <Profiles {...profileProps}/>

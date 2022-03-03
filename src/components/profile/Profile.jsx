@@ -10,6 +10,21 @@ import Languages from './profile-components/Languages';
 export default function Profile() {
   let auth = useAuth();
   let navigate = useNavigate();
+
+  const getAge = () => {
+    if(auth.user.birthdate){
+      const today = new Date();
+      const birthdate = new Date(auth.user.birthdate);
+      let age = today.getFullYear() - birthdate.getFullYear();
+      const ageMonth = today.getMonth() - birthdate.getMonth();
+      if(ageMonth < 0 || (ageMonth === 0 && today.getDate() < birthdate.getDate())){
+        age--;
+      }
+      return `${age} years old`;
+    }else{
+      return '';
+    }
+  }
   
   const handleEdit = (e) => {
     e.preventDefault();
@@ -22,6 +37,7 @@ export default function Profile() {
           <h2>@{auth.user.username}</h2>
           <div>
             <div><h3>{auth.user.firstname} {auth.user.lastname}</h3></div>
+            <div><h4>{getAge()} {auth.user.nationality}</h4></div>
             <textarea disabled placeholder='Bio'>{auth.user.bio}</textarea>
             <p>Email: {auth.user.email}</p>
             <p>{<Languages languages={auth.user.languages || []}/>}</p>
