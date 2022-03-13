@@ -1,7 +1,10 @@
 import React from 'react'
 
-export default function PersonalityCard() {
+export default function PersonalityCard(props) {
+  const {personality} = props;
   return (
-    <div>PersonalityCard</div>
+    <div>
+      <p>{personality.question} {personality.answers[0]}</p>
+    </div>
   )
 }

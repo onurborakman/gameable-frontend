@@ -10,9 +10,11 @@ import Questions from './edit-components/Questions';
 import Nationality from './edit-components/Nationality';
 
 export default function ProfileEdit() {
+  //Context Provider
   let auth = useAuth();
+  //Navigation
   let navigate = useNavigate();
-
+  //States of Profile Components
   const [username, setUsername] = useState(auth.user.username);
   const [firstname, setFirstname] = useState(auth.user.firstname);
   const [lastname, setLastname] = useState(auth.user.lastname);
@@ -53,10 +55,11 @@ export default function ProfileEdit() {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //Edit Function
   const edit = async(updatedUser) => {
     await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser)
   }
-
+  //Handle Edit Function
   const handleEdit = (e) => {
     e.preventDefault();
     let user = {
@@ -88,7 +91,7 @@ export default function ProfileEdit() {
     auth.setUser(user);
     navigate('/profile');
   }
-
+  //Handle Input Changes
   const handleUsername = (e) => {e.preventDefault();setUsername(e.target.value);}
   const handleFirstname = (e) => {e.preventDefault();setFirstname(e.target.value);}
   const handleLastname = (e) => {e.preventDefault();setLastname(e.target.value);}
@@ -136,12 +139,12 @@ export default function ProfileEdit() {
   const profileProps = {
     handleSteam: handleSteam,
     handleDiscord: handleDiscord,
+    handleUplay: handleUplay,
     handleOrigin: handleOrigin,
     handleBattleNet: handleBattleNet,
     handlePlaystation: handlePlaystation,
     handleXbox: handleXbox,
-    handleUplay: handleUplay,
-    profiles: [steam, discord, uplay, battleNet, origin, playstation, xbox]
+    profiles: [steam, discord, uplay, origin, battleNet, playstation, xbox]
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* GAMES */
@@ -241,8 +244,8 @@ export default function ProfileEdit() {
         {currentGames}
         <Games handleAddGame={handleAddGame}/>
 
-        {currentTeams}
-        <Teams handleAddTeam={handleAddTeam}/>
+        {/*{currentTeams}
+        <Teams handleAddTeam={handleAddTeam}/>*/}
 
         {currentQuestions}
         <Questions handleAddQuestion={handleAddQuestion}/>

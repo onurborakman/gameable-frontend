@@ -2,10 +2,12 @@ import axios from 'axios'
 import React, {useState, useEffect} from 'react'
 
 const Games = (props) => {
+    //States
     const [gameList, setGameList] = useState([])
     const [selectedGame, setSelectedGame] = useState('');
     const [selectedRank, setSelectedRank] = useState('');
     const [selectedRole, setSelectedRole] = useState('');
+    //Props
     const {handleAddGame} = props;
     useEffect(()=>{
         allGames()
@@ -15,9 +17,13 @@ const Games = (props) => {
         const games = await data.data.data;
         setGameList(games);
     }
+    //Creating the options for games dropdown
     const gameOptions = gameList.map(game=><option value={JSON.stringify(game)}>{game.name}</option>)
+    //Creating the rank options depending on the selected game
     const rankOptions = () => selectedGame && selectedGame.ranks.map(rank=><option value={rank}>{rank}</option>)
+    //Creating the role option depending on the selected game
     const roleOptions = () => selectedGame && selectedGame.roles.map(role=><option value={role}>{role}</option>)
+    //Handlers to update the states on change
     const handleGameChange = (e) => {
         setSelectedGame(JSON.parse(e.target.value));
     }
@@ -27,7 +33,7 @@ const Games = (props) => {
     const handleRoleChange = (e) => {
         setSelectedRole(e.target.value);
     }
-
+    //Function to handle submission
     const handleSubmit = (e) => {
         e.preventDefault()
         const game = {

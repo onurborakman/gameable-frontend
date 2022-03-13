@@ -2,7 +2,9 @@ import React from 'react'
 import LanguageList from '../../../assets/data/languages.json';
 
 const Languages = (props) => {
+    //Props
     const {handlePrimaryLanguage, handleSecondaryLanguage, languages} = props;
+    //Getting the list of languages from the JSON data.
     const getLanguageList = () => {
         return LanguageList.map(language => {
             return (

@@ -8,9 +8,11 @@ import PersonalityCard from './profile-components/PersonalityCard';
 import Languages from './profile-components/Languages';
 
 export default function Profile() {
+  //Context Provider
   let auth = useAuth();
+  //Navigation
   let navigate = useNavigate();
-
+  //Calculate Age
   const getAge = () => {
     if(auth.user.birthdate){
       const today = new Date();
@@ -25,7 +27,7 @@ export default function Profile() {
       return '';
     }
   }
-  
+  //Listen Edit Button
   const handleEdit = (e) => {
     e.preventDefault();
     navigate('/profile/edit');
@@ -54,10 +56,17 @@ export default function Profile() {
                 )
               })}
             </div>
-            <div>
+            {/*<div>
               {auth.user.teams && auth.user.teams.map((team)=>{
                 return(
                   <TeamCard team={team}/>
+                )
+              })}
+            </div>*/}
+            <div>
+              {auth.user.personalities && auth.user.personalities.map(personality=>{
+                return(
+                  <PersonalityCard personality={personality}/>
                 )
               })}
             </div>

@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Profiles = (props) => {
+    //Props
     const [steam, discord, uplay, origin, battleNet, playstation, xbox] = props.profiles;
     const {handleSteam, handleDiscord, handleUplay, handleOrigin, handleBattleNet, handlePlaystation, handleXbox} = props;
     
