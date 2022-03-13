@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Profiles from './edit-components/Profiles';
 import Languages from './edit-components/Languages';
 import Games from './edit-components/Games';
-import Teams from './edit-components/Teams';
+//import Teams from './edit-components/Teams';
 import Questions from './edit-components/Questions';
 import Nationality from './edit-components/Nationality';
 
@@ -25,7 +25,7 @@ export default function ProfileEdit() {
   const [languages, setLanguages] = useState(auth.user.languages || []);
   const [password, setPassword] = useState(auth.user.password);
   const [games, setGames] = useState(auth.user.games || []);
-  const [teams, setTeams] = useState(auth.user.teams || []);
+  //const [teams, setTeams] = useState(auth.user.teams || []);
   const [questions, setQuestions] = useState(auth.user.personalities || []);
   /* PROFILES SECTION */
   /*
@@ -84,7 +84,7 @@ export default function ProfileEdit() {
           xbox
         ],
         matches: auth.user.matches,
-        teams: teams,
+        teams: [],
         password: password
     }
     edit(user)
@@ -170,7 +170,7 @@ export default function ProfileEdit() {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* Teams */
-  const currentTeams = teams.map(team => {
+  /*const currentTeams = teams.map(team => {
     return (
       <li>
         <ul>
@@ -187,7 +187,7 @@ export default function ProfileEdit() {
   }
   const handleAddTeam = (team) => {
     setTeams([...teams, team]);
-  }
+  }*/
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* Questions */
