@@ -24,8 +24,8 @@ const Languages = (props) => {
 
           <label>
               Secondary Language
-              <select onChange={handleSecondaryLanguage} >
-                  <option value={languages[1] || null}>{languages[1] || 'Please select a secondary language'}</option>
+              <select onChange={handleSecondaryLanguage}>
+                  <option value={languages[1] || ''}>{languages[1] || 'Please select a secondary language'}</option>
                   {getLanguageList()}
               </select>
           </label>

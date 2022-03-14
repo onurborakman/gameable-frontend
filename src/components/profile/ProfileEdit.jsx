@@ -103,12 +103,12 @@ export default function ProfileEdit() {
   /* LANGUAGES */
   const handlePrimaryLanguage = (e) => {
     e.preventDefault();
-    const languageArr = [e.target.value, languages[1] || null];
+    let languageArr = [e.target.value, languages[1] || ''];
     setLanguages(languageArr);
   }
   const handleSecondaryLanguage = (e) => {
     e.preventDefault();
-    const languageArr = [languages[0] || null, e.target.value];
+    let languageArr = [languages[0] || '', e.target.value];
     setLanguages(languageArr);
   }
   const languageProps = {
