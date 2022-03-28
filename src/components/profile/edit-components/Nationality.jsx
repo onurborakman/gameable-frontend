@@ -13,15 +13,13 @@ const Nationality = (props) => {
         })
     }
   return (
-    <div>
         <label>
-            Nationality
+            Nationality: 
             <select onChange={handleNationality}>
                 <option value={nationality || ''}>{nationality || 'Choose a nationality'}</option>
                 {getNationalityList()}
             </select>
         </label>
-    </div>
   )
 }
 

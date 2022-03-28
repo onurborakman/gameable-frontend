@@ -6,7 +6,7 @@ const Profiles = (props) => {
     const {handleSteam, handleDiscord, handleUplay, handleOrigin, handleBattleNet, handlePlaystation, handleXbox} = props;
     
   return (
-    <div>
+    <div className='profile-box'>
           {/* Steam URL */}
           <label>
               Steam URL:

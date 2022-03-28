@@ -6,6 +6,7 @@ import GameCard from './profile-components/GameCard';
 import ProfileCard from './profile-components/ProfileCard';
 import PersonalityCard from './profile-components/PersonalityCard';
 import Languages from './profile-components/Languages';
+import HomeVideo3 from '../../assets/videos/home3.mp4';
 
 export default function Profile() {
   //Context Provider
@@ -34,28 +35,40 @@ export default function Profile() {
   }
 
   return (
-    <div className='flex-column'>
-      <div className='profile-page'>
+    <div className='profile'>
+      <video autoPlay loop muted>
+        <source src={HomeVideo3} type='video/mp4' />
+      </video>
+      <div className='overlay'></div>
+      <div className='profile-box'>
           <h2>@{auth.user.username}</h2>
           <div>
-            <div><h3>{auth.user.firstname} {auth.user.lastname}</h3></div>
-            <div><h4>{getAge()} {auth.user.nationality}</h4></div>
-            <textarea disabled placeholder='Bio'>{auth.user.bio}</textarea>
+            <div className='name-box'><div><h3>{auth.user.firstname} {auth.user.lastname}</h3></div>
+            <div><h4>{getAge()} {auth.user.nationality}</h4></div></div>
+      </div>
+      <div className='textarea'>
+          <textarea disabled placeholder='Bio'>{auth.user.bio}</textarea></div>
+        <div className='profile-box-2'>
             <p>Email: {auth.user.email}</p>
             <p>{<Languages languages={auth.user.languages || []}/>}</p>
+        </div>
+        <div className='profiles-container'>
             <div className='profiles'>{auth.user.profiles && auth.user.profiles.map((profile, index)=>{
               return(
                 <ProfileCard profile={profile} index={index}/>
               )
             })}
             </div>
-            <div>
+        </div>
+        
+            <div className='games'>
               {auth.user.games && auth.user.games.map((game)=>{
                 return(
                   <GameCard game={game}/>
                 )
               })}
             </div>
+        <div className='profile-box-3'>
             {/*<div>
               {auth.user.teams && auth.user.teams.map((team)=>{
                 return(
@@ -70,7 +83,7 @@ export default function Profile() {
                 )
               })}
             </div>
-            <div className='flex-row'><button type="button" onClick={handleEdit} className='button form-button'><span>EDIT</span></button></div>
+            <div><button type="button" onClick={handleEdit} className='button'><span>EDIT</span></button></div>
           </div>
       </div>
     </div>

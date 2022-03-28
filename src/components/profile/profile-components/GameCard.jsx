@@ -4,12 +4,10 @@ import React, { useState, useEffect } from 'react'
 export default function GameCard(props) {
   const {game} = props
   return (
-    <div>
-    { game.name }
-    <ul>
-      <li>Rank: {game.ranks}</li>
-      <li>Role: {game.roles}</li>
-    </ul>
+    <div className='game-card'>
+      <div className='title'><h3><b>{game.name}</b></h3></div>
+      <p>Rank: {game.ranks}</p>
+      <p>Role: {game.roles}</p>
     </div>
   )
 }

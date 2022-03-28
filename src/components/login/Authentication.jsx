@@ -49,7 +49,7 @@ export function RequireAuth(){
   let location = useLocation();
 
   if(!auth.user){
-    return <Navigate to="/login" state={{from: location}}/>;
+    return <Navigate replace to="/login" state={{from: location}}/>;
   }
 
   return <Outlet/>
@@ -66,66 +66,33 @@ export function NoAuth(){
   return <Outlet/>;
 }
 
+export function RequireMatch(){
+  let auth = useAuth();
+  let location = useLocation();
+
+  if(auth.user.match === null){
+    return <Navigate to='/match' state={{from: location}}/>;
+  }
+
+  return <Outlet/>;
+}
+
 export function AuthNavbar(){
   let auth = useAuth();
   let navigate = useNavigate();
 
-  if(!auth.user){
-    return (
-      <div>
-        <nav>
-          <ul className='nav-ul'>
-            <div className='main'>
-              <div className='logo'>
-                <li className='nav-li'>
-                  <Link to='/'>GAMEABLE</Link>
-                </li>
-              </div>
-              <div className='menu'>
-                <li className='nav-li'>
-                  <Link to="/">Home</Link>
-                </li>
-              </div>
-              <div className='right-menu'>
-                <li className='nav-li'>
-                  <Link to="/login">Login</Link>
-                </li>
-                <li className='nav-li'>
-                  <Link to="/registration">Register</Link>
-                </li>
-              </div>
-            </div>
-          </ul>
-        </nav>
-      </div>
-    )
-  }
-
   return(
-    <div>
+    <div className="navbar">
       <nav>
-        <ul className='nav-ul'>
-          <div className='main'>
-          <div className='logo'>
-            <li className='nav-li'>
-               <Link to='/'>GAMEABLE</Link>
-            </li>
-          </div>
-          <div className='menu'>
-            <li className='nav-li'>
-              <Link to="/protected">Protected</Link>
-            </li>
-          </div>
-          <div className='right-menu'>
-            <li className='nav-li'>
+        <div className='title-box'><a href='/' className='title'>GAMEABLE</a><a href='/match' className='item'>MATCH UP!</a></div>
+          <div className='top-right-menu'>
+            <div className='profile'>
               <Link to="/profile">{auth.user.username}</Link>
-            </li>
-              <button
-                onClick={()=>auth.logout(()=>navigate("/"))}
-               className='button logout-button'><span>Log out</span></button>
+            </div>
+            <div className='logout'><button
+              onClick={()=>auth.logout(()=>navigate("/"))} className='button'>
+            <span>Log out</span></button></div>
           </div>
-          </div>
-      </ul>
       </nav>
     </div>
   )

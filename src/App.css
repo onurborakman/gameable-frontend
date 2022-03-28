@@ -3,53 +3,6 @@ textarea{
     width: 25vw;
     height: auto;
 }
-
-.nav-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: black;
-}
-
-.nav-li {
-    float: left;
-}
-
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-li a:hover{
-    background-color: gray;
-}
-
-.menu {
-    flex: 0.9;
-    display: flex;
-    justify-content:center;
-    align-items: center;
-}
-
-.right-menu{
-    flex: 0.1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-}
-
-.main{
-    display: flex;
-}
-
-.logo {
-    flex: 0.1;
-}
-
 /**/
 .form{
     display: flex;
@@ -61,70 +14,25 @@ li a:hover{
 h2{
     flex: 1;
 }
-form{
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 25%;
-}
-form label{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    margin-top: 10%;
-}
-form label input{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
+
 button{
-    display: block;
-    border: none;
-    text-align: center;
-    color: #ffffff;
-    cursor: pointer;
-    transition: all 0.5s;
-    background-color: orangered;
-    padding: 5px;
+    
 }
 
 button span{
-    cursor: pointer;
-    display: block;
-    position: relative;
-    transition: 0.5s;
+    
 }
 
 button span:after{
-    content: '\00bb';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
+    
 }
 
 button:hover span{
-    padding-right: 25px;
+    
 }
 
 button:hover span:after{
-    opacity: 1;
-    right: 0;
-}
-
-.button{
-    height: 100%;
-    width: 25%;
-}
-
-.form-button{
-    margin: 10%;
+    
 }
 
 .logout-button{

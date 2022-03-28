@@ -40,7 +40,7 @@ const Questions = (props) => {
         handleAddQuestion(question);
     }
   return (
-    <div>
+    <div className='question-selection-box'>
           <select onChange={handleQuestionChange}>
               <option value={''}>Please select a question</option>
               {questionOptions}
@@ -51,7 +51,7 @@ const Questions = (props) => {
                   {answerOptions()}
               </select>
           }
-          <button onClick={handleSubmit}>Add Question</button>
+          <button onClick={handleSubmit} className='button'><span>Add</span></button>
     </div>
   )
 }

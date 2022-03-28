@@ -8,6 +8,7 @@ import Games from './edit-components/Games';
 //import Teams from './edit-components/Teams';
 import Questions from './edit-components/Questions';
 import Nationality from './edit-components/Nationality';
+import HomeVideo3 from '../../assets/videos/home3.mp4';
 
 export default function ProfileEdit() {
   //Context Provider
@@ -83,7 +84,7 @@ export default function ProfileEdit() {
           playstation,
           xbox
         ],
-        matches: auth.user.matches,
+        match: auth.user.match,
         teams: [],
         password: password
     }
@@ -150,14 +151,13 @@ export default function ProfileEdit() {
   /* GAMES */
   const currentGames = games.map(game=>{
     return(
-      <li>
-        <ul>
-          <li>Game: {game.name}</li>
-          <li>Rank: {game.ranks}</li>
-          <li>Role: {game.roles}</li>
-        </ul>
-        <button onClick={(e)=>{e.preventDefault();deleteGame(game)}}>DELETE</button>
-      </li>
+        <div className='game-card'>
+          <div className='title'><h3><b>{game.name}</b></h3></div>
+          <p>Rank: {game.ranks}</p>
+          <p>Role: {game.roles}</p>
+
+        <button className='button' onClick={(e) => { e.preventDefault(); deleteGame(game) }}><span>DELETE</span></button>
+        </div>
     )
   })
   const deleteGame = (gameToDelete) => {
@@ -193,9 +193,9 @@ export default function ProfileEdit() {
   /* Questions */
   const currentQuestions = questions.map(question=>{
     return(
-      <div>
+      <div className='question'>
         {question.question}: {question.answers}
-        <button onClick={(e) => { e.preventDefault(); deleteQuestion(question) }}>DELETE</button>
+        <button onClick={(e) => { e.preventDefault(); deleteQuestion(question) }} className='button'><span>DELETE</span></button>
       </div>
     )
   })
@@ -208,53 +208,54 @@ export default function ProfileEdit() {
   }
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
-    <div className='form'>
+    <div className='edit'>
+      <video autoPlay loop muted>
+        <source src={HomeVideo3} type='video/mp4' />
+      </video>
+      <div className='overlay'></div>
       <h2>Edit Profile</h2>
       <form onSubmit={handleEdit}>
-      <label>
-        Username
+      <div className='introduction'><label>
+        Username:
         <input type="text" value={username} onChange={handleUsername}/>
       </label>
+        <label>
+          Email:
+          <input type="email" value={email} onChange={handleEmail} />
+          </label>
       <label>
-        First Name
+        First Name:
         <input type="text" value={firstname} onChange={handleFirstname}/>
       </label>
       <label>
-        Last Name
+        Last Name:
         <input type="text" value={lastname} onChange={handleLastname}/>
-      </label>
-      <label>
-        Email
-        <input type="email" value={email} onChange={handleEmail}/>
-      </label>
+          </label>
         <Nationality {...nationalityProps} />
         <label>
-          Birthdate
+          Birthdate:
           <input type='date' value={birthdate} onChange={handleBirthdate}/>
-        </label>
-      <label>
-        Bio
-        <textarea value={bio} onChange={handleBio}/>
-      </label>
+          </label></div>
+        <div className='textarea'><textarea value={bio} onChange={handleBio} /></div>
 
         
         <Languages {...languageProps}/>
         <Profiles {...profileProps}/>
 
-        {currentGames}
+        <div className='games'>{currentGames}</div>
         <Games handleAddGame={handleAddGame}/>
 
         {/*{currentTeams}
         <Teams handleAddTeam={handleAddTeam}/>*/}
 
-        {currentQuestions}
+        <div className='questions'>{currentQuestions}</div>
         <Questions handleAddQuestion={handleAddQuestion}/>
-        <label>
-          Password
+        <div className='ending'><label>
+          Password:
           <input type="password" value={password} onChange={handlePassword}/>
         </label>
-      <button type='submit'><span>Edit</span></button>
+          <button type='submit' className='button'><span>Edit</span></button></div>
       </form>
     </div>
-  );;
+  );
 }

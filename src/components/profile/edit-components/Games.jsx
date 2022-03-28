@@ -46,7 +46,7 @@ const Games = (props) => {
     }
 
   return (
-    <div>
+    <div className='game-selection-box'>
         <select onChange={handleGameChange}>
             <option value={''}>Please select a game</option>
             {gameOptions}
@@ -63,7 +63,7 @@ const Games = (props) => {
             {roleOptions()}
         </select>
         }
-        <button onClick={handleSubmit}>Add Game</button>
+          <button onClick={handleSubmit} className='button'><span>Add</span></button>
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import BackgroundVideo from '../../assets/videos/home.mp4';
 
 export default function Registration() {
 
@@ -38,33 +39,39 @@ export default function Registration() {
   const handlePassword = (e) => {e.preventDefault();setPassword(e.target.value);}
 
   return (
-    <>
+    <div className='login-register'>
+      <div className='title-box'><a href='/'>GAMEABLE</a></div>
     <div className='form'>
+        <video autoPlay loop muted>
+          <source src={BackgroundVideo} type='video/mp4' />
+        </video>
+        <div className='overlay'></div>
       <h2>Registration</h2>
       <form onSubmit={handleRegistration}>
       <label>
         Username
-        <input type="text" onChange={handleUsername}/>
+        <input type="text" onChange={handleUsername} required/>
       </label>
       <label>
         First Name
-        <input type="text" onChange={handleFirstname}/>
+        <input type="text" onChange={handleFirstname} required/>
       </label>
       <label>
         Last Name
-        <input type="text" onChange={handleLastname}/>
+        <input type="text" onChange={handleLastname} required/>
       </label>
       <label>
         Email
-        <input type="email" onChange={handleEmail}/>
+        <input type="email" onChange={handleEmail} required/>
       </label>
       <label>
         Password
-        <input type="password" onChange={handlePassword}/>
+        <input type="password" onChange={handlePassword} required/>
       </label>
-      <button type='submit' className='button form-button'><span>Register</span></button>
+      <button type='submit' className='button'><span>Register</span></button>
       </form>
+      <a href='/login'>Already have an account? Sign in.</a>
     </div>
-    </>
+    </div>
   );
 }
