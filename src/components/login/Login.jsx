@@ -6,6 +6,7 @@ export default function Login() {
 
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const [message, setMessage] = useState('');
 
   let auth = useAuth();
 
@@ -16,7 +17,7 @@ export default function Login() {
       password: password
     }
     auth.login(user, (newUser)=>{
-      console.log(newUser)
+      setMessage(newUser);
     })
   }
 
@@ -33,6 +34,7 @@ export default function Login() {
   return (
     <div className='login-register'>
       <div className='title-box'><a href='/'>GAMEABLE</a></div>
+      {message && <p className='message'>{message}</p>}
       <div className='form'>
         <video autoPlay loop muted>
           <source src={BackgroundVideo} type='video/mp4' />
@@ -52,6 +54,7 @@ export default function Login() {
         </form>
         <a href="/registration">Not registered? Sign up now.</a>
       </div>
+      <div className='footer-class'><p>Copyright © 2022 Gameable</p></div>
     </div>
   );
 }

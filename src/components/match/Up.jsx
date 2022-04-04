@@ -14,6 +14,7 @@ const Up = () => {
     const auth = useAuth();
     const navigate = useNavigate();
     const [userList, setUserList] = useState([]);
+    const [sliceCount, setSliceCount] = useState(10);
     useEffect(()=>{
         window.addEventListener("beforeunload", cleanMatch);
         return () => window.removeEventListener("beforeunload", cleanMatch)
@@ -39,7 +40,8 @@ const Up = () => {
             profiles: auth.user.profiles,
             match: null,
             teams: auth.user.teams,
-            password: auth.user.password
+            password: auth.user.password,
+            feedback: auth.user.feedback
         }
         auth.setUser(user)
         edit(user);
@@ -61,7 +63,8 @@ const Up = () => {
             profiles: auth.user.profiles,
             match: null,
             teams: auth.user.teams,
-            password: auth.user.password
+            password: auth.user.password,
+            feedback: auth.user.feedback
         }
         auth.setUser(user)
         edit(user);
@@ -100,24 +103,30 @@ const Up = () => {
         }
     }
 
+    const showMore = () => {
+        setSliceCount(sliceCount + 10);
+    }
+
     const users = userList.map(user=>{
         return(
-            <div>
-                <h2>{user.username}</h2>
+            <div className='user-card'>
+                <div><h2>{user.username}</h2>
                 <h4>{user.firstname} {user.lastname}</h4>
-                {
+                <h5>{user.birthdate && getAge(user.birthdate)} years old {user.nationality}</h5>
+                </div>
+                <div className='languages'>{
                     user.languages[0] && <p>Primary Language: {user.languages[0]}</p>
                 }
                 {
                     user.languages[1] && <p>Secondary Language: {user.languages[1]}</p>
-                }
-                <div>
+                    }</div>
+                <div className='profiles'>
                     {user.profiles[0] && user.profiles[0] !== '' && <a href={user.profiles[0]}><img src={Steam} alt='Steam' width='50px' height='50px'/></a>}
-                    {user.profiles[1] && user.profiles[1] !== '' && <a href={user.profiles[1]}><img src={Discord} alt='Discord' width='50px' height='50px' /></a>}
+                    {user.profiles[1] && user.profiles[1] !== '' && <a href={user.profiles[1]}><img src={Discord} alt='Discord' width='75px' height='50px' /></a>}
                     {user.profiles[2] && user.profiles[2] !== '' && <a href={user.profiles[2]}><img src={Uplay} alt='Uplay' width='50px' height='50px' /></a>}
                     {user.profiles[3] && user.profiles[3] !== '' && <a href={user.profiles[3]}><img src={Battlenet} alt='Battlenet' width='50px' height='50px' /></a>}
                     {user.profiles[4] && user.profiles[4] !== '' && <a href={user.profiles[4]}><img src={Origin} alt='Origin' width='50px' height='50px' /></a>}
-                    {user.profiles[5] && user.profiles[5] !== '' && <a href={user.profiles[5]}><img src={Playstation} alt='Playstation' width='50px' height='50px' /></a>}
+                    {user.profiles[5] && user.profiles[5] !== '' && <a href={user.profiles[5]} className='playstation'><img src={Playstation} alt='Playstation' width='50px' height='50px' /></a>}
                     {user.profiles[6] && user.profiles[6] !== '' && <a href={user.profiles[6]}><img src={Xbox} alt='Xbox' width='50px' height='50px' /></a>}
                 </div>
             </div>
@@ -131,7 +140,8 @@ const Up = () => {
           </video>
           <div className='overlay'></div>
           <div>
-            {users}
+            {users.slice(0, sliceCount)}
+              <div className='button-container'><button onClick={showMore}>{'<<'}Show More{'>>'}</button></div>
           </div>
       </div>
   )

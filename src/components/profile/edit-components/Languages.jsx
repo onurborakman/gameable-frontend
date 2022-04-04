@@ -8,7 +8,7 @@ const Languages = (props) => {
     const getLanguageList = () => {
         return LanguageList.map(language => {
             return (
-                <option value={language.name}>{language.name}</option>
+                <option value={language.name} key={language.name}>{language.name}</option>
             )
         })
     }
@@ -16,16 +16,16 @@ const Languages = (props) => {
     <div className='language-box'>
           <label>
               Primary Language:
-              <select onChange={handlePrimaryLanguage}>
-                  <option value={languages[0] || ''}>{languages[0] || 'Please select a primary language'}</option>
+              <select onChange={handlePrimaryLanguage} defaultValue={languages[0] || ''}>
+                  <option value={languages[0] || ''} selected disabled hidden key={languages[0] || ''}>{languages[0] || 'Please select a primary language'}</option>
                   {getLanguageList()}
               </select>
           </label>
 
           <label>
               Secondary Language:
-              <select onChange={handleSecondaryLanguage}>
-                  <option value={languages[1] || ''}>{languages[1] || 'Please select a secondary language'}</option>
+              <select onChange={handleSecondaryLanguage} defaultValue={languages[1] || ''}>
+                  <option value={languages[1] || ''} selected disabled hidden key={languages[1] || ''}>{languages[1] || 'Please select a secondary language'}</option>
                   {getLanguageList()}
               </select>
           </label>

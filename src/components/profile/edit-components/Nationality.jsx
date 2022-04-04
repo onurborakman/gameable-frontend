@@ -8,15 +8,15 @@ const Nationality = (props) => {
     const getNationalityList = () => {
         return NationalityList.map(nation=>{
             return (
-                <option value={nation}>{nation}</option>
+                <option value={nation} key={nation}>{nation}</option>
             )
         })
     }
   return (
         <label>
             Nationality: 
-            <select onChange={handleNationality}>
-                <option value={nationality || ''}>{nationality || 'Choose a nationality'}</option>
+            <select onChange={handleNationality} defaultValue={nationality || ''}>
+              <option value={nationality || ''} selected disabled hidden key={nationality || ''}>{nationality || 'Choose a nationality'}</option>
                 {getNationalityList()}
             </select>
         </label>

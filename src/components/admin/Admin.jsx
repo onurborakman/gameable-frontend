@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react'
 import {useAuth} from '../login/Authentication'
 import Modal from './Modal';
+import HomeVideo3 from '../../assets/videos/home3.mp4';
 
 export default function Admin() {
   let auth = useAuth();
@@ -36,8 +37,10 @@ export default function Admin() {
             <td>{user.lastname}</td>
             <td>{user.email}</td>
             <td>
-              <button onClick={(e) => { e.preventDefault(); editUser(user) }}>EDIT</button>
-              <button onClick={(e) => { e.preventDefault(); deleteUser(user.id) }}>DELETE</button>
+              <div className='actions'>
+              <button onClick={(e) => { e.preventDefault(); editUser(user) }} className='edit'><span>EDIT</span></button>
+              <button onClick={(e) => { e.preventDefault(); deleteUser(user.id) }} className='delete'><span>X</span></button>
+              </div>
             </td>
           </tr>
         )
@@ -52,9 +55,13 @@ export default function Admin() {
   }
 
   return (
-    <div>
+    <div className='admin'>
+      <video autoPlay loop muted>
+        <source src={HomeVideo3} type='video/mp4' />
+      </video>
+      <div className='overlay'></div>
         {auth.user.username === 'admin' && 
-          <table>
+          <table className='table'>
             <tr>
               <th>ID</th>
               <th>Username</th>

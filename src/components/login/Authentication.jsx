@@ -22,7 +22,9 @@ export default function Authentication(props) {
             response.data.data.forEach(user=>{
               if(user.username === newUser.username && user.password === newUser.password){
                 setUser(user);
-                callback(user); 
+                callback(""); 
+              }else{
+                callback('Username or password does not match our records. Please try again')
               }
             })
           }

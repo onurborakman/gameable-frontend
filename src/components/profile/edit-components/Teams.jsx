@@ -13,7 +13,8 @@ const Teams = (props) => {
         const teams = await data.data.data;
         setTeamList(teams);
     }
-    const teamOptions = teamList.map(team => <option value={JSON.stringify(team)}>{team.name}</option>)
+    const teamOptions = teamList.map(team => <option value={JSON.stringify(team)} key={JSON.stringify(team)
+}>{team.name}</option>)
     const handleTeamChange = (e) => {
         setSelectedTeam(JSON.parse(e.target.value));
     }

@@ -46,7 +46,8 @@ export default function Match() {
       profiles: auth.user.profiles,
       match: match,
       teams: auth.user.teams,
-      password: auth.user.password
+      password: auth.user.password,
+      feedback: auth.user.feedback
     }
     auth.setUser(user);
     edit(user);
@@ -66,7 +67,7 @@ export default function Match() {
     <form onSubmit={onSubmit}>
       <select onChange={handleSelectedGameChange}>
         {
-          auth.user.games
+          auth.user.games.length > 0
           ? <option value='' selected disabled hidden>Please select a game you want to play</option>
           : <option value='' selected disabled hidden>Please add a game to your profile</option>
         }

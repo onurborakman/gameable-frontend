@@ -36,7 +36,6 @@ function App() {
           </Route>
 
           <Route path="*" element={<NoMatch/>}/>
-
         </Route>
       </Routes>
     </Authentication>

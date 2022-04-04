@@ -41,17 +41,21 @@ export default function Profile() {
       </video>
       <div className='overlay'></div>
       <div className='profile-box'>
-          <h2>@{auth.user.username}</h2>
-          <div>
-            <div className='name-box'><div><h3>{auth.user.firstname} {auth.user.lastname}</h3></div>
-            <div><h4>{getAge()} {auth.user.nationality}</h4></div></div>
+        <div className='name-box'>
+          <h2>{auth.user.username} AKA {auth.user.firstname} {auth.user.lastname}</h2>
+            <p>{getAge()} {auth.user.nationality}</p>
       </div>
       <div className='textarea'>
           <textarea disabled placeholder='Bio'>{auth.user.bio}</textarea></div>
-        <div className='profile-box-2'>
-            <p>Email: {auth.user.email}</p>
-            <p>{<Languages languages={auth.user.languages || []}/>}</p>
+        <div className='games'>
+          {auth.user.games && auth.user.games.map((game) => {
+            return (
+              <GameCard game={game} />
+            )
+          })}
         </div>
+        
+        
         <div className='profiles-container'>
             <div className='profiles'>{auth.user.profiles && auth.user.profiles.map((profile, index)=>{
               return(
@@ -61,13 +65,7 @@ export default function Profile() {
             </div>
         </div>
         
-            <div className='games'>
-              {auth.user.games && auth.user.games.map((game)=>{
-                return(
-                  <GameCard game={game}/>
-                )
-              })}
-            </div>
+            
         <div className='profile-box-3'>
             {/*<div>
               {auth.user.teams && auth.user.teams.map((team)=>{
@@ -83,6 +81,10 @@ export default function Profile() {
                 )
               })}
             </div>
+          <div className='profile-box-2'>
+            <p>Email: {auth.user.email}</p>
+            <p>{<Languages languages={auth.user.languages || []} />}</p>
+          </div>
             <div><button type="button" onClick={handleEdit} className='button'><span>EDIT</span></button></div>
           </div>
       </div>

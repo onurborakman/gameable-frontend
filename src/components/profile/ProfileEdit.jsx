@@ -86,7 +86,8 @@ export default function ProfileEdit() {
         ],
         match: auth.user.match,
         teams: [],
-        password: password
+        password: password,
+        feedback: auth.user.feedback
     }
     edit(user)
     auth.setUser(user);
@@ -109,13 +110,9 @@ export default function ProfileEdit() {
   }
   const handleSecondaryLanguage = (e) => {
     e.preventDefault();
-    let languageArr = [languages[0] || '', e.target.value];
+    let languageArr = [...languages];
+    languageArr.splice(1, 1, e.target.value);
     setLanguages(languageArr);
-  }
-  const languageProps = {
-    handlePrimaryLanguage: handlePrimaryLanguage,
-    handleSecondayLanguage: handleSecondaryLanguage,
-    languages: languages
   }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* NATIONALITY */
@@ -215,7 +212,7 @@ export default function ProfileEdit() {
       <div className='overlay'></div>
       <h2>Edit Profile</h2>
       <form onSubmit={handleEdit}>
-      <div className='introduction'><label>
+      <div className='wrapper'><div className='introduction'><label>
         Username:
         <input type="text" value={username} onChange={handleUsername}/>
       </label>
@@ -235,12 +232,12 @@ export default function ProfileEdit() {
         <label>
           Birthdate:
           <input type='date' value={birthdate} onChange={handleBirthdate}/>
-          </label></div>
+          </label></div></div>
         <div className='textarea'><textarea value={bio} onChange={handleBio} /></div>
 
         
-        <Languages {...languageProps}/>
-        <Profiles {...profileProps}/>
+        <Languages handlePrimaryLanguage={handlePrimaryLanguage} handleSecondaryLanguage={handleSecondaryLanguage} languages={languages} />
+        <div className='wrapper-2'><Profiles {...profileProps} /></div>
 
         <div className='games'>{currentGames}</div>
         <Games handleAddGame={handleAddGame}/>

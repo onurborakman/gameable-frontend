@@ -11,7 +11,7 @@ export default function ProfileCard(props) {
   return (
     <div>
       {props.index === 0 && props.profile !== '' && <><a href={props.profile}><img src={Steam} alt="Steam" width='50px' height='50px'/></a></>}
-      {props.index === 1 && props.profile !== '' && <><a href={props.profile}><img src={Discord} alt="Discord" width='50px' height='50px' /></a></>}
+      {props.index === 1 && props.profile !== '' && <><a href={props.profile}><img src={Discord} alt="Discord" width='75px' height='50px' /></a></>}
       {props.index === 2 && props.profile !== '' && <><a href={props.profile}><img src={Uplay} alt="Uplay" width='50px' height='50px' /></a></>}
       {props.index === 3 && props.profile !== '' && <><a href={props.profile}><img src={Battlenet} alt="Battlenet" width='50px' height='50px' /></a></>}
       {props.index === 4 && props.profile !== '' && <><a href={props.profile}><img src={Origin} alt="Origin" width='50px' height='50px' /></a></>}

@@ -14,9 +14,10 @@ const Modal = (props) => {
         setModal(false)
     }
   return (
-    <div>
-        <h1>Edit {selectedUser.username}<button onClick={()=>setModal(false)}>X</button></h1>
-        <label>
+    <div className='modal-background'><div className='modal-box'>
+      <div className='title-button'><button onClick={() => setModal(false)}>X</button></div>
+      <div className='title'><h1>Edit {selectedUser.username}</h1></div>
+        <div className='body-container'><div className='body'><label>
           Username:    
           <input type='text' value={selectedUser.username} placeholder='Username' onChange={handleUsernameChange}/>
         </label>
@@ -39,9 +40,9 @@ const Modal = (props) => {
           <label>
               Password:
               <input type='text' value={selectedUser.password} placeholder='Password' onChange={handlePasswordChange} />
-          </label>
-          <button onClick={saveChanges}>Save Changes</button>
-    </div>
+        </label></div></div>
+      <div className='footer'><button onClick={saveChanges} className='button'><span>Save Changes</span></button></div>
+    </div></div>
   )
 }
 
