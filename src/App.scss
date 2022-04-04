@@ -1,8 +1,13 @@
 *{
-    font-family: "Audiowide", sans-serif;
-    @media (max-width: 1200px) {
-        font-size: 20px;
-    }
+        font-family: "Audiowide", sans-serif;
+        @media(max-width: 790px){
+            font-size: 0.7rem;
+        }
+
+        @media(max-width: 700px){
+            font-size: 0.6rem;
+        }
+
     input{
         padding: 5px;
 
@@ -27,14 +32,15 @@
         top: 0;
         left: 0;
         overflow: hidden;
-        width: 100%;
+        width: 100vw;
 
         .top-right-menu{
             top: 0;
             right: 0;
-            width: 25%;
+            width: 25vw;
             position: absolute;
-            margin: 50px;
+            margin-top: 3%;
+            margin-right: 3%;
             display: flex;
             flex-direction: row;
             justify-content: space-around;
@@ -44,12 +50,12 @@
                 a{
                     text-decoration: none;
                     color: white;
-                    width: 100px;
-                    height: 25px;
+                    width: 6vw;
+                    height: 4vh;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    margin-right: 10px;
+                    margin-right: 1%;
                     border: 5px solid transparent;
                     transition: 500ms;
 
@@ -64,7 +70,7 @@
             .logout{
                 button{
                     overflow: hidden;
-                    width: 150px;
+                    width: 10vw;
                 }
             }
         }
@@ -907,24 +913,26 @@
 
         td{
             border: 1px solid white;
-            padding: 8px;
+            padding: 1%;
             text-align: center;
             background-color: rgba(0, 0, 0, 0.5);
 
             .actions{
                 display: flex;
-                justify-content: space-around;
-                align-items: center;
+                justify-content: center;
+                align-items: flex-end;
                 overflow: hidden;
 
                 button{
                     width: 100%;
+                    height: 100%;
                     border: none;
                     cursor: pointer;
                 }
 
                 .edit{
                     background-color: orange;
+                    color: #ffffff;
                 }
 
                 .delete{
@@ -936,11 +944,11 @@
 
         th{
             border: 1px solid white;
-            padding: 8px;
+            padding: 1%;
             text-align: center;
             background-color: rgba(255,69,0,0.5);
-            padding-top: 15px;
-            padding-bottom: 15px;
+            padding-top: 1%;
+            padding-bottom: 1%;
         }
     }
 
@@ -1036,7 +1044,7 @@
     overflow: hidden;
 
     button{
-        margin-left: 15px;
+        margin-left: 5%;
         border: 1px solid orangered;
         background-color: orangered;
         color: white;
@@ -1102,6 +1110,11 @@
                     flex-direction: column;
                     
                     label{
+                        display: block;
+                        text-align: center;
+                        margin-top: 5%;
+                    }
+                    select{
                         display: block;
                         text-align: center;
                         margin-top: 5%;

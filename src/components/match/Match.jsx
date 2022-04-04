@@ -65,13 +65,13 @@ export default function Match() {
       </video>
       <div className='overlay'></div>
     <form onSubmit={onSubmit}>
-      <select onChange={handleSelectedGameChange}>
+      <select onChange={handleSelectedGameChange} defaultValue={''} disabled={!auth.user.games || !auth.user.games.length ? 'disabled' : ''}>
         {
-          auth.user.games.length > 0
-          ? <option value='' selected disabled hidden>Please select a game you want to play</option>
-          : <option value='' selected disabled hidden>Please add a game to your profile</option>
+          auth.user.games && auth.user.games.length > 0
+          ? <option value='' disabled hidden>Please select a game you want to play</option>
+          : <option value='' disabled hidden>Please add a game to your profile</option>
         }
-        {getGameOptions()}
+        {auth.user.games && getGameOptions()}
       </select>
       <button type='submit' disabled={!selectedGame && "disabled"} className='button'><span>MATCH UP!</span></button>
     </form>

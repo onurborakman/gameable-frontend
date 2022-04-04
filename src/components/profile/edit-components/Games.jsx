@@ -22,7 +22,7 @@ const Games = (props) => {
         setGameList(games);
     }
     //Creating the options for games dropdown
-    const gameOptions = gameList.map(game => <option value={JSON.stringify(game)} key={JSON.stringify(game)
+    const gameOptions = gameList.length > 0 && gameList.map(game => <option value={JSON.stringify(game)} key={JSON.stringify(game)
 }>{game.name}</option>)
     //Creating the rank options depending on the selected game
     const rankOptions = () => selectedGame && selectedGame.ranks.map(rank=><option value={rank} key={rank}>{rank}</option>)
@@ -47,7 +47,7 @@ const Games = (props) => {
             ranks: [selectedRank],
             roles: [selectedRole]
         }
-        if(checkout.filter(e=>e.name===game.name).length === 0){
+        if(checkout.filter(el=>el.name===game.name).length === 0){
             setCheckout([...checkout, game]);
             handleAddGame(game);
         }else{

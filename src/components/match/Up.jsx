@@ -79,7 +79,7 @@ const Up = () => {
         let result = [];
         users.forEach((user)=>{
             if(user.match && user.username !== auth.user.username){
-                if(user.match.game.name === auth.user.match.game.name){
+                if(user.match.game.name === auth.user.match.game.name && user.match.game.ranks[0] === auth.user.match.game.ranks[0] && user.match.game.roles[0] !== auth.user.match.game.roles[0]){
                     result.push(user);
                 }
             }

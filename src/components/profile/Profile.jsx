@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../login/Authentication';
-import TeamCard from './profile-components/TeamCard';
 import GameCard from './profile-components/GameCard';
 import ProfileCard from './profile-components/ProfileCard';
 import PersonalityCard from './profile-components/PersonalityCard';
@@ -28,6 +27,22 @@ export default function Profile() {
       return '';
     }
   }
+  //Check for empty links in profiles
+  const checkProfiles = () => {
+    if(auth.user.profiles){
+      let count = 0;
+      auth.user.profiles.forEach(profile => {
+        if(profile === ''){count++}
+      })
+      if(count === auth.user.profiles.length){
+        return false;
+      }else{
+        return true;
+      }
+    }else{
+      return false;
+    }
+  }
   //Listen Edit Button
   const handleEdit = (e) => {
     e.preventDefault();
@@ -45,8 +60,8 @@ export default function Profile() {
           <h2>{auth.user.username} AKA {auth.user.firstname} {auth.user.lastname}</h2>
             <p>{getAge()} {auth.user.nationality}</p>
       </div>
-      <div className='textarea'>
-          <textarea disabled placeholder='Bio'>{auth.user.bio}</textarea></div>
+      {auth.user.bio && <div className='textarea'>
+          <textarea disabled placeholder='Bio'>{auth.user.bio}</textarea></div>}
         <div className='games'>
           {auth.user.games && auth.user.games.map((game) => {
             return (
@@ -57,23 +72,16 @@ export default function Profile() {
         
         
         <div className='profiles-container'>
-            <div className='profiles'>{auth.user.profiles && auth.user.profiles.map((profile, index)=>{
+            {checkProfiles() && <div className='profiles'>{auth.user.profiles.map((profile, index)=>{
               return(
                 <ProfileCard profile={profile} index={index}/>
               )
             })}
-            </div>
+            </div>}
         </div>
         
             
         <div className='profile-box-3'>
-            {/*<div>
-              {auth.user.teams && auth.user.teams.map((team)=>{
-                return(
-                  <TeamCard team={team}/>
-                )
-              })}
-            </div>*/}
             <div>
               {auth.user.personalities && auth.user.personalities.map(personality=>{
                 return(
