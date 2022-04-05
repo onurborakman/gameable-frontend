@@ -18,8 +18,7 @@ export default function Admin() {
     setUsers(list);
   }
   const deleteUser = async(id) => {
-    const data = await axios.delete(`https://gameable-api.herokuapp.com/api/user/delete/${id}`);
-    const result = await data.data.data;
+    await axios.delete(`https://gameable-api.herokuapp.com/api/user/delete/${id}`);
     setUsers([]);
   }
   const editUser = (user) => {
@@ -54,12 +53,70 @@ export default function Admin() {
     selectedUser: selectedUser
   }
 
+  const firstQuestionPercentages = () => {
+    let good = 0;
+    let neutral = 0;
+    let bad = 0;
+    let total = 0;
+
+    users.forEach(user=>{
+      if(user.feedback){
+        if (user.feedback[0] === 1) {
+          good++;
+        } else if (user.feedback[0] === 2) {
+          neutral++;
+        } else if (user.feedback[0] === 3) {
+          bad++;
+        }
+      }
+      
+    })
+
+    total = good + neutral + bad;
+
+    return(
+      <div>
+        <h4>Did your performance on games improve? Good: {good/total*100}% | Neutral: {neutral/total*100}% | Bad: {bad/total*100}%</h4>
+      </div>
+    )
+  }
+
+  const secondQuestionPercentages = () => {
+    let good = 0;
+    let neutral = 0;
+    let bad = 0;
+    let total = 0;
+
+    users.forEach(user => {
+      if (user.feedback) {
+        if (user.feedback[1] === 1) {
+          good++;
+        } else if (user.feedback[1] === 2) {
+          neutral++;
+        } else if (user.feedback[1] === 3) {
+          bad++;
+        }
+      }
+
+    })
+
+    total = good + neutral + bad;
+
+    return (
+      <div>
+        <h4>Did you start enjoying multiplayer game more? Good: {good / total * 100}% | Neutral: {neutral / total * 100}% | Bad: {bad / total * 100}%</h4>
+      </div>
+    )
+  }
+
   return (
     <div className='admin'>
       <video autoPlay loop muted>
         <source src={HomeVideo3} type='video/mp4' />
       </video>
       <div className='overlay'></div>
+        {firstQuestionPercentages()}
+        {secondQuestionPercentages()}
         {auth.user.username === 'admin' && 
           <table className='table'>
             <tr>

@@ -240,13 +240,13 @@ export default function ProfileEdit() {
         <div className='wrapper-2'><Profiles {...profileProps} /></div>
 
         <div className='games'>{currentGames}</div>
-        <Games handleAddGame={handleAddGame}/>
+        <Games handleAddGame={handleAddGame} games={games}/>
 
         {/*{currentTeams}
         <Teams handleAddTeam={handleAddTeam}/>*/}
 
         <div className='questions'>{currentQuestions}</div>
-        <Questions handleAddQuestion={handleAddQuestion}/>
+        <Questions handleAddQuestion={handleAddQuestion} questions={questions}/>
         <div className='ending'><label>
           Password:
           <input type="password" value={password} onChange={handlePassword}/>

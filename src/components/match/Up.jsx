@@ -34,7 +34,7 @@ const Up = () => {
             bio: auth.user.bio,
             games: auth.user.games,
             languages: auth.user.languages,
-            personalities: auth.user.questions,
+            personalities: auth.user.personalities,
             nationality: auth.user.nationality,
             birthdate: auth.user.birthdate,
             profiles: auth.user.profiles,
@@ -107,6 +107,10 @@ const Up = () => {
         setSliceCount(sliceCount + 10);
     }
 
+    const refresh = () => {
+        getMatches();
+    }
+
     const users = userList.map(user=>{
         return(
             <div className='user-card'>
@@ -114,12 +118,23 @@ const Up = () => {
                 <h4>{user.firstname} {user.lastname}</h4>
                 <h5>{user.birthdate && getAge(user.birthdate)} years old {user.nationality}</h5>
                 </div>
-                <div className='languages'>{
+                <div className='languages'>
+                {
                     user.languages[0] && <p>Primary Language: {user.languages[0]}</p>
                 }
                 {
                     user.languages[1] && <p>Secondary Language: {user.languages[1]}</p>
-                    }</div>
+                }
+                {
+                    user.personalities && user.personalities.map(personality=>{
+                        return(
+                            <div>
+                                <p>{personality.question}: {personality.answers[0]}</p>
+                            </div>
+                        )
+                    })
+                }
+                </div>
                 <div className='profiles'>
                     {user.profiles[0] && user.profiles[0] !== '' && <a href={user.profiles[0]}><img src={Steam} alt='Steam' width='50px' height='50px'/></a>}
                     {user.profiles[1] && user.profiles[1] !== '' && <a href={user.profiles[1]}><img src={Discord} alt='Discord' width='75px' height='50px' /></a>}
@@ -139,6 +154,7 @@ const Up = () => {
               <source src={HomeVideo3} type='video/mp4' />
           </video>
           <div className='overlay'></div>
+          <div className='refresh-container'><button onClick={refresh}>Refresh</button></div>
           <div>
             {users.slice(0, sliceCount)}
               <div className='button-container'><button onClick={showMore}>{'<<'}Show More{'>>'}</button></div>

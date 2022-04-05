@@ -1,21 +1,21 @@
 import axios from 'axios'
 import React, {useState, useEffect} from 'react'
-import { useAuth } from '../../login/Authentication'
 
 const Games = (props) => {
-    const auth = useAuth();
+    //Props
+    const { handleAddGame, games } = props;
     //States
     const [gameList, setGameList] = useState([])
     const [selectedGame, setSelectedGame] = useState('');
     const [selectedRank, setSelectedRank] = useState('');
     const [selectedRole, setSelectedRole] = useState('');
-    const [checkout, setCheckout] = useState(auth.user.games);
+    const [checkout, setCheckout] = useState(games || []);
     const [message, setMessage] = useState('');
-    //Props
-    const {handleAddGame} = props;
+    
     useEffect(()=>{
         allGames()
-    },[])
+        setCheckout(games);
+    },[games])
     const allGames = async() => {
         const data = await axios.get(`https://gameable-api.herokuapp.com/api/game/all`);
         const games = await data.data.data;
@@ -47,12 +47,20 @@ const Games = (props) => {
             ranks: [selectedRank],
             roles: [selectedRole]
         }
-        if(checkout.filter(el=>el.name===game.name).length === 0){
-            setCheckout([...checkout, game]);
-            handleAddGame(game);
+        if(checkout.length){
+            if (checkout.filter(el => el.name === game.name).length === 0) {
+                setCheckout([...checkout, game]);
+                handleAddGame(game);
+                setMessage('')
+            } else {
+                setMessage('Game has already been added. Please select a different game');
+            }
         }else{
-            setMessage('Game has already been added. Please select a different game');
+            setCheckout([game]);
+            handleAddGame(game);
+            setMessage('');
         }
+        
     }
 
   return (

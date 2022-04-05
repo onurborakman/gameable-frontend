@@ -1,26 +1,25 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useAuth } from '../../login/Authentication';
 
 const Questions = (props) => {
-    const auth = useAuth();
     //Props
-    const {handleAddQuestion} = props;
+    const {handleAddQuestion, questions} = props;
     //States
     const [selectedQuestion, setSelectedQuestion] = useState('');
     const [selectedAnswer, setSelectedAnswer] = useState('');
     const [questionList, setQuestionList] = useState([]);
-    const [checkout, setCheckout] = useState(auth.user.personalities);
+    const [checkout, setCheckout] = useState(questions || []);
     const [message, setMessage] = useState('');
 
     useEffect(()=>{
         getQuestions();
-    },[])
+        setCheckout(questions)
+    },[questions])
     //Function to get the list of questions
     const getQuestions = async() => {
         const data = await axios.get(`https://gameable-api.herokuapp.com/api/personality/all`);
-        const questions = await data.data.data;
-        setQuestionList(questions);
+        const questionsList = await data.data.data;
+        setQuestionList(questionsList);
     }
     //Create the questions as options for dropdown
     const questionOptions = questionList.map(question => <option value={JSON.stringify(question)} key={JSON.stringify(question)
@@ -45,6 +44,7 @@ const Questions = (props) => {
         if(checkout.filter(e=>e.question===question.question).length === 0){
             setCheckout([...checkout, question]);
             handleAddQuestion(question);
+            setMessage('')
         }else{
             setMessage('Question has already been added. Please select a different question');
         }

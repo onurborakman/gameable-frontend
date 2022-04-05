@@ -65,7 +65,7 @@ export default function Profile() {
         <div className='games'>
           {auth.user.games && auth.user.games.map((game) => {
             return (
-              <GameCard game={game} />
+              <GameCard game={game} key={game}/>
             )
           })}
         </div>
@@ -74,7 +74,7 @@ export default function Profile() {
         <div className='profiles-container'>
             {checkProfiles() && <div className='profiles'>{auth.user.profiles.map((profile, index)=>{
               return(
-                <ProfileCard profile={profile} index={index}/>
+                <ProfileCard profile={profile} index={index} key={profile}/>
               )
             })}
             </div>}
@@ -85,13 +85,13 @@ export default function Profile() {
             <div>
               {auth.user.personalities && auth.user.personalities.map(personality=>{
                 return(
-                  <PersonalityCard personality={personality}/>
+                  <PersonalityCard personality={personality} key={personality}/>
                 )
               })}
             </div>
           <div className='profile-box-2'>
             <p>Email: {auth.user.email}</p>
-            <p>{<Languages languages={auth.user.languages || []} />}</p>
+            {<Languages languages={auth.user.languages || []} />}
           </div>
             <div><button type="button" onClick={handleEdit} className='button'><span>EDIT</span></button></div>
           </div>

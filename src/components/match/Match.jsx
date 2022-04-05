@@ -14,7 +14,7 @@ export default function Match() {
     return auth.user.games &&
     auth.user.games.map((game) => {
       return(
-        <option value={game.name}>{game.name}</option>
+        <option value={game.name} key={game.name}>{game.name}</option>
       )
     }) 
   }
@@ -40,7 +40,7 @@ export default function Match() {
       bio: auth.user.bio,
       games: auth.user.games,
       languages: auth.user.languages,
-      personalities: auth.user.questions,
+      personalities: auth.user.personalities,
       nationality: auth.user.nationality,
       birthdate: auth.user.birthdate,
       profiles: auth.user.profiles,
