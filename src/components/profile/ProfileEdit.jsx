@@ -206,7 +206,7 @@ export default function ProfileEdit() {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div className='edit'>
-      <video autoPlay loop muted>
+      <video autoPlay loop muted playsInline>
         <source src={HomeVideo3} type='video/mp4' />
       </video>
       <div className='overlay'></div>

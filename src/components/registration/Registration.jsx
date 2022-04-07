@@ -65,7 +65,7 @@ export default function Registration() {
     <div className='login-register'>
       <div className='title-box'><a href='/'>GAMEABLE</a></div>
     <div className='form'>
-        <video autoPlay loop muted>
+        <video autoPlay loop muted playsInline>
           <source src={BackgroundVideo} type='video/mp4' />
         </video>
         <div className='overlay'></div>

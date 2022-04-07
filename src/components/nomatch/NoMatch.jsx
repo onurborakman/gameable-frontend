@@ -3,7 +3,7 @@ import HomeVideo3 from '../../assets/videos/home3.mp4';
 
 export default function NoMatch() {
   return <div className='no-matches'>
-    <video autoPlay loop muted>
+    <video autoPlay loop muted playsInline>
       <source src={HomeVideo3} type='video/mp4' />
     </video>
     <div className='overlay'></div>

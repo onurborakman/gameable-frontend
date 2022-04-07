@@ -12,7 +12,7 @@ export default function Home() {
     return(
       <div className='home'>
         <div className='title-box'><h1>GAMEABLE</h1></div>
-        <video autoPlay loop muted>
+        <video autoPlay loop muted playsInline>
           <source src={HomeVideo} type='video/mp4'/>
         </video>
         <div className='overlay'></div>
@@ -23,7 +23,7 @@ export default function Home() {
     return(
       <div className='home'>
         <div className='title-box'><h1>GAMEABLE</h1></div>
-        <video autoPlay loop muted>
+        <video autoPlay loop muted playsInline>
           <source src={HomeVideo3} type='video/mp4' />
         </video>
         <div className='overlay'></div>

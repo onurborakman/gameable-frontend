@@ -60,7 +60,7 @@ export default function Match() {
 
   return (
   <div className='match'>
-      <video autoPlay loop muted>
+      <video autoPlay loop muted playsInline>
         <source src={HomeVideo3} type='video/mp4' />
       </video>
       <div className='overlay'></div>
