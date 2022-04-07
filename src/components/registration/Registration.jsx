@@ -39,11 +39,20 @@ export default function Registration() {
       password: password
     }
     if(users.filter(el=>el.username===user.username).length === 0 && users.filter(el=>el.email===user.email).length === 0){
-      register(user)
-      navigate('/login');
+      if(checkPassword(user.password)){
+        register(user)
+        navigate('/login');
+      }else{
+        setMessage('Password must contain at least 2 upper case characters and at least 2 special characters')
+      }
     }else{
       setMessage('Username or email already exists');
     }
+  }
+
+  const checkPassword = (password) => {
+    const regex = /(?=.*[A-Z].*[A-Z].*)(?=.*[!@#$%^&*].*[!@#$%^&*].*)(?=.{8,12})/;
+    return regex.test(password);
   }
 
   const handleUsername = (e) => {e.preventDefault();setUsername(e.target.value);}

@@ -503,6 +503,7 @@
             padding: 15px;
             margin-bottom: 15px;
             transition: 0.3s;
+            flex-wrap: wrap;
 
             &:hover{
                 box-shadow: 0 8px 16px 0 orangered;
@@ -831,6 +832,7 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+            flex-wrap: wrap;
 
             a:nth-child(4){
                 margin-left: 1vw;
