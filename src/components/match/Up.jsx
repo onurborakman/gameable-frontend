@@ -148,6 +148,23 @@ const Up = () => {
         )
     })
 
+    const usersJSX = () => {
+        if (users.length > 0) {
+            return(
+                <div>
+                    {users.slice(0, sliceCount)}
+                    <div className='button-container' > <button onClick={showMore}>{'<<'}Show More{'>>'}</button></div>
+                </div>
+            )
+        }else{
+            return(
+                <div>
+                    <p>There are currently no users online</p>
+                </div>
+            )
+        }
+    }
+
   return (
       <div className='up'>
           <video autoPlay loop muted playsInline>
@@ -155,10 +172,7 @@ const Up = () => {
           </video>
           <div className='overlay'></div>
           <div className='refresh-container'><button onClick={refresh}>Refresh</button></div>
-          <div>
-            {users.slice(0, sliceCount)}
-              <div className='button-container'><button onClick={showMore}>{'<<'}Show More{'>>'}</button></div>
-          </div>
+          {usersJSX()}
       </div>
   )
 }
