@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import BackgroundVideo from '../../assets/videos/home.mp4';
+import { apikey } from '../login/Authentication';
 
 export default function Registration() {
   //States
@@ -20,13 +21,13 @@ export default function Registration() {
   },[]);
   //Function to get the list of the users
   const listOfUsers = async () => {
-    const data = await axios.get('https://gameable-api.herokuapp.com/api/user/all');
+    const data = await axios.get('http://gameable-api.herokuapp.com/api/user/all', {}, apikey);
     const result = data.data.data;
     setUsers(result);
   }
   //Method to register the user
   const register = async (newUser) => {
-    await axios.put('https://gameable-api.herokuapp.com/api/user/create', newUser)
+    await axios.put('http://gameable-api.herokuapp.com/api/user/create', newUser, apikey)
   }
   //Method to handle the registration
   const handleRegistration = (e) => {

@@ -17,7 +17,7 @@ const Questions = (props) => {
     },[questions])
     //Function to get the list of questions
     const getQuestions = async() => {
-        const data = await axios.get(`https://gameable-api.herokuapp.com/api/personality/all`);
+        const data = await axios.get(`http://gameable-api.herokuapp.com/api/personality/all`);
         const questionsList = await data.data.data;
         setQuestionList(questionsList);
     }

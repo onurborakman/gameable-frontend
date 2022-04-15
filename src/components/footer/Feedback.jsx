@@ -42,7 +42,7 @@ const Feedback = (props) => {
     //function to edit the user
   const edit = async (updatedUser) => {
     //await axios patch request
-    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
+    await axios.patch(`http://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
   }
   //jsx
   return (

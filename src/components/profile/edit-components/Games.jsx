@@ -17,7 +17,7 @@ const Games = (props) => {
         setCheckout(games);
     },[games])
     const allGames = async() => {
-        const data = await axios.get(`https://gameable-api.herokuapp.com/api/game/all`);
+        const data = await axios.get(`http://gameable-api.herokuapp.com/api/game/all`);
         const games = await data.data.data;
         setGameList(games);
     }

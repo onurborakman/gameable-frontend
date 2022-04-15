@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react'
+import { apikey } from '../../login/Authentication';
 
 const Teams = (props) => {
     const [teamList, setTeamList] = useState([]);
@@ -9,7 +10,7 @@ const Teams = (props) => {
         allTeams();
     },[]);
     const allTeams = async() => {
-        const data = await axios.get(`https://gameable-api.herokuapp.com/api/team/all`);
+        const data = await axios.get(`http://gameable-api.herokuapp.com/api/team/all`, {}, apikey);
         const teams = await data.data.data;
         setTeamList(teams);
     }

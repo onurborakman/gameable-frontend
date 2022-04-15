@@ -55,18 +55,24 @@ export default function ProfileEdit() {
 
   //Edit Function
   const edit = async(updatedUser) => {
-    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
+    //await axios patch request
+    await axios.patch(`http://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
   }
   //Function to get the list of the users
   const listOfUsers = async () => {
-    const data = await axios.get('https://gameable-api.herokuapp.com/api/user/all', {}, apikey);
+    //await axios get request
+    const data = await axios.get('http://gameable-api.herokuapp.com/api/user/all', {}, apikey);
+    //get data out of the response
     const result = data.data.data;
+    //set the state
     setUsers(result);
   }
   //Handle Edit Function
   const handleEdit = (e) => {
     e.preventDefault();
+    //get the list of users
     listOfUsers();
+    //update user
     let user = {
         id: auth.user.id,
         username: username,
@@ -258,15 +264,11 @@ export default function ProfileEdit() {
           </label></div></div>
         <div className='textarea'><textarea value={bio} onChange={handleBio} /></div>
 
-        
         <Languages handlePrimaryLanguage={handlePrimaryLanguage} handleSecondaryLanguage={handleSecondaryLanguage} languages={languages} />
         <div className='wrapper-2'><Profiles {...profileProps} /></div>
 
         <div className='games'>{currentGames}</div>
         <Games handleAddGame={handleAddGame} games={games}/>
-
-        {/*{currentTeams}
-        <Teams handleAddTeam={handleAddTeam}/>*/}
 
         <div className='questions'>{currentQuestions}</div>
         <Questions handleAddQuestion={handleAddQuestion} questions={questions}/>
