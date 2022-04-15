@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react'
+import { apikey } from '../login/Authentication';
 
 const Modal = (props) => {
     const {setModal, selectedUser} = props;
@@ -30,14 +31,14 @@ const Modal = (props) => {
         selectedUser.password = password;
 
         if(users.filter(el => el.username === selectedUser.username).length === 0 && users.filter(el => el.email === selectedUser.email).length === 0){
-          await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${selectedUser.id}`, selectedUser);
+          await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${selectedUser.id}`, selectedUser, apikey);
           setModal(false)
         }else{
           setMessage('Username or Email already exists in the system.');
         }
     }
   const listOfUsers = async () => {
-    const data = await axios.get('https://gameable-api.herokuapp.com/api/user/all');
+    const data = await axios.get('https://gameable-api.herokuapp.com/api/user/all', apikey);
     const result = data.data.data;
     setUsers(result.filter(el => el.username !== selectedUser.username));
   }
