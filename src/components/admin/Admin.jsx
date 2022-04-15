@@ -18,7 +18,7 @@ export default function Admin() {
   //function to get the users
   const getUsers = async() =>{
     //await axios get request
-    const data = await axios.get(`https://gameable-api.herokuapp.com/api/user/all`, {}, apikey);
+    const data = await axios.get(`https://gameable-api.herokuapp.com/api/user/all`, apikey);
     //get the list of users
     const list = await data.data.data;
     //set the state
@@ -27,7 +27,7 @@ export default function Admin() {
   //function to delete user by id
   const deleteUser = async(id) => {
     //await axios delete request
-    await axios.delete(`https://gameable-api.herokuapp.com/api/user/delete/${id}`, {}, apikey);
+    await axios.delete(`https://gameable-api.herokuapp.com/api/user/delete/${id}`, apikey);
     //empty the users state which will trigger useEffect
     setUsers([]);
   }

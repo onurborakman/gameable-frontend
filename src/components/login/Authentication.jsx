@@ -16,7 +16,7 @@ export default function Authentication(props) {
   },[user])
 
   const login = async (newUser, callback) => {
-      await axios.get('https://gameable-api.herokuapp.com/api/user/all', {}, apikey)
+      await axios.get('https://gameable-api.herokuapp.com/api/user/all', apikey)
         .then(response=>{
           if(response.data.responseCode === 200){
             response.data.data.forEach(user=>{
@@ -80,7 +80,9 @@ export function RequireMatch(){
 }
 
 export const apikey = {
-  "Api-Key": 'eba55d5a-8589-4c04-a935-b28f05736924'
+  "headers": {
+    "X-Api-Key": "eba55d5a-8589-4c04-a935-b28f05736924"
+  }
 };
 
 export function AuthNavbar(){

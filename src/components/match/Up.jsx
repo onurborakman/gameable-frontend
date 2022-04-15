@@ -89,7 +89,7 @@ const Up = () => {
     //function to get the matched users
     const getMatches = async() => {
         //await axios get request to get the matches
-        const data = await axios.get(`https://gameable-api.herokuapp.com/api/user/all`, {}, apikey);
+        const data = await axios.get(`https://gameable-api.herokuapp.com/api/user/all`, apikey);
         //get the data part of the response
         const users = data.data.data;
         //create an empty array

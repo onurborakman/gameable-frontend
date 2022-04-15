@@ -61,9 +61,11 @@ export default function ProfileEdit() {
   //Function to get the list of the users
   const listOfUsers = async () => {
     //await axios get request
-    const data = await axios.get('https://gameable-api.herokuapp.com/api/user/all', {}, apikey);
+    const data = await axios.get('https://gameable-api.herokuapp.com/api/user/all', apikey);
     //get data out of the response
-    const result = data.data.data;
+    let result = data.data.data;
+    //filter out current user
+    result = result.filter(el=>el.username!==username&&el.email!==email);
     //set the state
     setUsers(result);
   }
