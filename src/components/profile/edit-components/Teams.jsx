@@ -10,7 +10,7 @@ const Teams = (props) => {
         allTeams();
     },[]);
     const allTeams = async() => {
-        const data = await axios.get(`http://gameable-api.herokuapp.com/api/team/all`, {}, apikey);
+        const data = await axios.get(`https://gameable-api.herokuapp.com/api/team/all`, {}, apikey);
         const teams = await data.data.data;
         setTeamList(teams);
     }

@@ -84,12 +84,12 @@ const Up = () => {
     //function to edit the user
     const edit = async (updatedUser) => {
         //await for axios patch request to update the user
-        await axios.patch(`http://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
+        await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
     }
     //function to get the matched users
     const getMatches = async() => {
         //await axios get request to get the matches
-        const data = await axios.get(`http://gameable-api.herokuapp.com/api/user/all`, {}, apikey);
+        const data = await axios.get(`https://gameable-api.herokuapp.com/api/user/all`, {}, apikey);
         //get the data part of the response
         const users = data.data.data;
         //create an empty array

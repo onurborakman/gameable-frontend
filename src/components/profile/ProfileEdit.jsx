@@ -56,12 +56,12 @@ export default function ProfileEdit() {
   //Edit Function
   const edit = async(updatedUser) => {
     //await axios patch request
-    await axios.patch(`http://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
+    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
   }
   //Function to get the list of the users
   const listOfUsers = async () => {
     //await axios get request
-    const data = await axios.get('http://gameable-api.herokuapp.com/api/user/all', {}, apikey);
+    const data = await axios.get('https://gameable-api.herokuapp.com/api/user/all', {}, apikey);
     //get data out of the response
     const result = data.data.data;
     //set the state
