@@ -5,9 +5,11 @@ import HomeVideo from '../../assets/videos/home.mp4';
 import HomeVideo3 from '../../assets/videos/home3.mp4';
 
 export default function Home() {
+  //authenticated user
   let auth = useAuth();
+  //navigation
   let navigate = useNavigate();
-
+  //Home layout depending on if the user is authenticated or not
   if(!auth.user){
     return(
       <div className='home'>

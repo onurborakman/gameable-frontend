@@ -1,15 +1,19 @@
 import React, {useState} from 'react'
 import axios from 'axios';
-import { useAuth } from '../login/Authentication';
+import { apikey, useAuth } from '../login/Authentication';
 
 const Feedback = (props) => {
+    //props
     const {setModal} = props
+    //authenticated user
     const auth = useAuth();
+    //states
     const [first, setFirst] = useState(0);
     const [second, setSecond] = useState(0);
-
+    //function to enter the feedback to the database and localstorage
     const submitFeedback = (e) => {
         e.preventDefault();
+        //update the user
       let user = {
         id: auth.user.id,
         username: auth.user.username,
@@ -28,14 +32,19 @@ const Feedback = (props) => {
         password: auth.user.password,
         feedback: [first, second]
       }
+      //update the user on database
       edit(user);
+      //update the user on localstorage
       auth.setUser(user);
+      //close the modal
       setModal(false);
     }
-
+    //function to edit the user
   const edit = async (updatedUser) => {
-    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser)
+    //await axios patch request
+    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
   }
+  //jsx
   return (
     <div className='modal-background'>
         <div className='modal-box'>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react'
-import { useAuth } from '../login/Authentication';
+import { apikey, useAuth } from '../login/Authentication';
 import { useNavigate } from 'react-router-dom';
 import HomeVideo3 from '../../assets/videos/home3.mp4';
 import Steam from '../../assets/steam.png'
@@ -11,11 +11,16 @@ import Uplay from '../../assets/uplay.png';
 import Playstation from '../../assets/psn.png';
 import Xbox from '../../assets/xbox.png';
 const Up = () => {
+    //authenticated user
     const auth = useAuth();
+    //navigation
     const navigate = useNavigate();
+    //states
     const [userList, setUserList] = useState([]);
     const [sliceCount, setSliceCount] = useState(10);
+    //use of useEffects to keep the system in real-time
     useEffect(()=>{
+        //listen for user for beforeunload event
         window.addEventListener("beforeunload", cleanMatch);
         return () => window.removeEventListener("beforeunload", cleanMatch)
     })
@@ -23,8 +28,9 @@ const Up = () => {
     useEffect(()=>{
         getMatches()
     },[])
-
+    //function to clean the user's match in database
     const unMount = () => {
+        //update the user
         let user = {
             id: auth.user.id,
             username: auth.user.username,
@@ -43,11 +49,15 @@ const Up = () => {
             password: auth.user.password,
             feedback: auth.user.feedback
         }
+        //update the user in localStorage
         auth.setUser(user)
+        //update the user in database
         edit(user);
     }
+    //function to clean the match in database with event prevention (prevent default) for event listener
     const cleanMatch = (e) => {
         e.preventDefault();
+        //update the user
         let user = {
             id: auth.user.id,
             username: auth.user.username,
@@ -66,28 +76,37 @@ const Up = () => {
             password: auth.user.password,
             feedback: auth.user.feedback
         }
+        //update the user in localStorage
         auth.setUser(user)
+        //update the user in database
         edit(user);
     } 
+    //function to edit the user
     const edit = async (updatedUser) => {
-        await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser)
+        //await for axios patch request to update the user
+        await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
     }
-
+    //function to get the matched users
     const getMatches = async() => {
-        const data = await axios.get(`https://gameable-api.herokuapp.com/api/user/all`);
+        //await axios get request to get the matches
+        const data = await axios.get(`https://gameable-api.herokuapp.com/api/user/all`, {}, apikey);
+        //get the data part of the response
         const users = data.data.data;
+        //create an empty array
         let result = [];
+        //apply the filters to the users array
         users.forEach((user)=>{
             if(user.match && user.username !== auth.user.username){
                 if(user.match.game.name === auth.user.match.game.name && user.match.game.ranks[0] === auth.user.match.game.ranks[0] && user.match.game.roles[0] !== auth.user.match.game.roles[0]){
+                    //store the filtered users on result array
                     result.push(user);
                 }
             }
         })
-        console.log(result);
+        //set the state
         setUserList(result);
     }
-
+    //function to calculate age from the user's database information
     const getAge = (birthday) => {
         if (birthday) {
             const today = new Date();
@@ -102,15 +121,15 @@ const Up = () => {
             return '';
         }
     }
-
+    //Function to show more users
     const showMore = () => {
         setSliceCount(sliceCount + 10);
     }
-
+    //function to refresh the page
     const refresh = () => {
         getMatches();
     }
-
+    //function to create cards for each user
     const users = userList.map(user=>{
         return(
             <div className='user-card'>
@@ -147,7 +166,7 @@ const Up = () => {
             </div>
         )
     })
-
+    //UI functionality
     const usersJSX = () => {
         if (users.length > 0) {
             return(
@@ -164,7 +183,7 @@ const Up = () => {
             )
         }
     }
-
+    //JSX
   return (
       <div className='up'>
           <video autoPlay loop muted playsInline>

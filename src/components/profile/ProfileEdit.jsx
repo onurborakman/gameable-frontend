@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import { useAuth } from '../login/Authentication';
+import React, {useState} from 'react';
+import { apikey, useAuth } from '../login/Authentication';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Profiles from './edit-components/Profiles';
 import Languages from './edit-components/Languages';
 import Games from './edit-components/Games';
-//import Teams from './edit-components/Teams';
 import Questions from './edit-components/Questions';
 import Nationality from './edit-components/Nationality';
 import HomeVideo3 from '../../assets/videos/home3.mp4';
@@ -26,8 +25,9 @@ export default function ProfileEdit() {
   const [languages, setLanguages] = useState(auth.user.languages || []);
   const [password, setPassword] = useState(auth.user.password);
   const [games, setGames] = useState(auth.user.games || []);
-  //const [teams, setTeams] = useState(auth.user.teams || []);
   const [questions, setQuestions] = useState(auth.user.personalities || []);
+  const [users, setUsers] = useState([]);
+  const [message, setMessage] = useState('')
   /* PROFILES SECTION */
   /*
     0-Steam
@@ -53,16 +53,20 @@ export default function ProfileEdit() {
   //Xbox Live Link
   const [xbox, setXbox] = useState(() => { return (auth.user.profiles !== null ? auth.user.profiles[6] : '')});
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //Edit Function
   const edit = async(updatedUser) => {
-    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser)
+    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser, apikey)
+  }
+  //Function to get the list of the users
+  const listOfUsers = async () => {
+    const data = await axios.get('https://gameable-api.herokuapp.com/api/user/all', {}, apikey);
+    const result = data.data.data;
+    setUsers(result);
   }
   //Handle Edit Function
   const handleEdit = (e) => {
     e.preventDefault();
+    listOfUsers();
     let user = {
         id: auth.user.id,
         username: username,
@@ -89,9 +93,26 @@ export default function ProfileEdit() {
         password: password,
         feedback: auth.user.feedback
     }
-    edit(user)
-    auth.setUser(user);
-    navigate('/profile');
+    //check to see if the username or email exists
+    if (users.filter(el => el.username === user.username).length === 0 && users.filter(el => el.email === user.email).length === 0) {
+      //check to see if password is valid
+      if (checkPassword(user.password)) {
+        //update database
+        edit(user)
+        //update localstorage
+        auth.setUser(user);
+        //navigate back to profile
+        navigate('/profile');
+      } else {
+        //display feedback
+        setMessage('Password must contain at least 2 upper case characters and at least 2 special characters')
+      }
+    } else {
+      //display feedback
+      setMessage('Username or email already exists');
+    }
+    
+    
   }
   //Handle Input Changes
   const handleUsername = (e) => {e.preventDefault();setUsername(e.target.value);}
@@ -101,39 +122,48 @@ export default function ProfileEdit() {
   const handleBio = (e) => { e.preventDefault(); setBio(e.target.value); }
   const handlePassword = (e) => { e.preventDefault(); setPassword(e.target.value); }
   const handleBirthdate = (e) => {e.preventDefault(); setBirthdate(e.target.value);}
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* LANGUAGES */
+  //handle primary language change
   const handlePrimaryLanguage = (e) => {
     e.preventDefault();
     let languageArr = [e.target.value, languages[1] || ''];
     setLanguages(languageArr);
   }
+  //handle secondary language change
   const handleSecondaryLanguage = (e) => {
     e.preventDefault();
     let languageArr = [...languages];
     languageArr.splice(1, 1, e.target.value);
     setLanguages(languageArr);
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* NATIONALITY */
+  //handle nationality change
   const handleNationality = (e) => {
     e.preventDefault();
     const result = e.target.value;
     setNationality(result);
   }
+  //nationality properties to pass to child component
   const nationalityProps = {
     nationality: nationality,
     handleNationality: handleNationality
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* PROFILES */
+  //handle Steam link change
   const handleSteam = (e) => {e.preventDefault();setSteam(e.target.value);}
+  //handle discord link change
   const handleDiscord = (e) => {e.preventDefault();setDiscord(e.target.value);}
+  //handle origin link change
   const handleOrigin = (e) => { e.preventDefault(); setOrigin(e.target.value); }
+  //handle battlenet link change
   const handleBattleNet = (e) => { e.preventDefault(); setBattleNet(e.target.value); }
+  //handle playstation link change
   const handlePlaystation = (e) => { e.preventDefault(); setPlaystation(e.target.value); }
+  //handle xbox link change
   const handleXbox = (e) => { e.preventDefault(); setXbox(e.target.value); }
+  //handle uplay link change
   const handleUplay = (e) => { e.preventDefault(); setUplay(e.target.value); }
+  //profile properties to pass to child component
   const profileProps = {
     handleSteam: handleSteam,
     handleDiscord: handleDiscord,
@@ -144,8 +174,8 @@ export default function ProfileEdit() {
     handleXbox: handleXbox,
     profiles: [steam, discord, uplay, origin, battleNet, playstation, xbox]
   }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* GAMES */
+  //display already added games
   const currentGames = games.map(game=>{
     return(
         <div className='game-card'>
@@ -157,37 +187,20 @@ export default function ProfileEdit() {
         </div>
     )
   })
+  //function delete a game
   const deleteGame = (gameToDelete) => {
+    //filter out the game from the array
     const result = games.filter(game=>game!==gameToDelete)
+    //update the state
     setGames(result);
   }
+  //handle new game addition
   const handleAddGame = (game) => {
+    //update the state
     setGames([...games, game]);
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /* Teams */
-  /*const currentTeams = teams.map(team => {
-    return (
-      <li>
-        <ul>
-          <li>Team: {team.name}</li>
-          <li>Bio: {team.bio}</li>
-        </ul>
-        <button onClick={(e) => { e.preventDefault(); deleteTeam(team) }}>DELETE</button>
-      </li>
-    )
-  })
-  const deleteTeam = (teamToDelete) => {
-    const result = teams.filter(team => team !== teamToDelete)
-    setTeams(result);
-  }
-  const handleAddTeam = (team) => {
-    setTeams([...teams, team]);
-  }*/
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   /* Questions */
+  //display currently added questions
   const currentQuestions = questions.map(question=>{
     return(
       <div className='question'>
@@ -196,14 +209,23 @@ export default function ProfileEdit() {
       </div>
     )
   })
+  //handle question deletion
   const deleteQuestion = (questionToDelete) => {
+    //filter the questions by filtering out the selected question
     const result = questions.filter(question=>question!==questionToDelete);
+    //update the state
     setQuestions(result);
   }
+  //handle new question
   const handleAddQuestion = (question) => {
     setQuestions([...questions, question]);
   }
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //Method to check password requirements
+  const checkPassword = (password) => {
+    const regex = /(?=.*[A-Z].*[A-Z].*)(?=.*[!@#$%^&*].*[!@#$%^&*].*)(?=.{8,12})/;
+    return regex.test(password);
+  }
+  //JSX
   return (
     <div className='edit'>
       <video autoPlay loop muted playsInline>
@@ -211,6 +233,7 @@ export default function ProfileEdit() {
       </video>
       <div className='overlay'></div>
       <h2>Edit Profile</h2>
+      {message && <p className='message'>{message}</p>}
       <form onSubmit={handleEdit}>
       <div className='wrapper'><div className='introduction'><label>
         Username:

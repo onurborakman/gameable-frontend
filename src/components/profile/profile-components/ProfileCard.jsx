@@ -8,6 +8,7 @@ import Playstation from '../../../assets/psn.png';
 import Xbox from '../../../assets/xbox.png';
 
 export default function ProfileCard(props) {
+  //JSX
   return (
     <div>
       {props.index === 0 && props.profile !== '' && <><a href={props.profile}><img src={Steam} alt="Steam" width='50px' height='50px'/></a></>}

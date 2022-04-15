@@ -1,16 +1,19 @@
 import React, {useState} from 'react';
-import { useAuth } from '../login/Authentication'; 
+import { apikey, useAuth } from '../login/Authentication'; 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import HomeVideo3 from '../../assets/videos/home3.mp4';
 
 export default function Match() {
+  //authenticated user
   const auth = useAuth();
+  //navigation
   const navigate = useNavigate();
-
+  //states
   const [selectedGame, setSelectedGame] = useState('');
-
+  //create game options for dropdown
   const getGameOptions = () => {
+    //return the user's games as optios
     return auth.user.games &&
     auth.user.games.map((game) => {
       return(
@@ -18,7 +21,7 @@ export default function Match() {
       )
     }) 
   }
-
+  //function to handle the selected game change
   const handleSelectedGameChange = (e) => {
     e.preventDefault();
     setSelectedGame(e.target.value);
@@ -26,11 +29,14 @@ export default function Match() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    //retrieve the game
     let gameToBePlayed = auth.user.games.filter((game)=>game.name === selectedGame);
+    //create the match
     let match = {
       game: gameToBePlayed[0],
       questions: []
     }
+    //create an updated user
     let user = {
       id: auth.user.id,
       username: auth.user.username,
@@ -49,15 +55,19 @@ export default function Match() {
       password: auth.user.password,
       feedback: auth.user.feedback
     }
+    //update the localStorage
     auth.setUser(user);
+    //edit the user
     edit(user);
+    //navigate user to the results page
     navigate('/match/up')
   }
-
+  //function to edit the user
   const edit = async (updatedUser) => {
-    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser)
+    //awaiting axios patch request
+    await axios.patch(`https://gameable-api.herokuapp.com/api/user/update/${auth.user.id}`, updatedUser , apikey)
   }
-
+  //JSX
   return (
   <div className='match'>
       <video autoPlay loop muted playsInline>

@@ -4,7 +4,7 @@ import axios from 'axios';
 import BackgroundVideo from '../../assets/videos/home.mp4';
 
 export default function Registration() {
-
+  //States
   const [username, setUsername] = useState('');
   const [firstname, setFirstname] = useState('');
   const [lastname, setLastname] = useState('');
@@ -12,23 +12,23 @@ export default function Registration() {
   const [password, setPassword] = useState('');
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState('');
-  
+  //Navigator
   let navigate = useNavigate();
-
+  //Running it on initialization
   useEffect(()=>{
     listOfUsers();
   },[]);
-
+  //Function to get the list of the users
   const listOfUsers = async () => {
     const data = await axios.get('https://gameable-api.herokuapp.com/api/user/all');
     const result = data.data.data;
     setUsers(result);
   }
-
+  //Method to register the user
   const register = async (newUser) => {
     await axios.put('https://gameable-api.herokuapp.com/api/user/create', newUser)
   }
-
+  //Method to handle the registration
   const handleRegistration = (e) => {
     e.preventDefault();
     let user = {
@@ -38,6 +38,7 @@ export default function Registration() {
       email: email,
       password: password
     }
+    //Checking for same username or email along with password requirements
     if(users.filter(el=>el.username===user.username).length === 0 && users.filter(el=>el.email===user.email).length === 0){
       if(checkPassword(user.password)){
         register(user)
@@ -49,18 +50,18 @@ export default function Registration() {
       setMessage('Username or email already exists');
     }
   }
-
+  //Method to check password requirements
   const checkPassword = (password) => {
     const regex = /(?=.*[A-Z].*[A-Z].*)(?=.*[!@#$%^&*].*[!@#$%^&*].*)(?=.{8,12})/;
     return regex.test(password);
   }
-
+  //User Input Handlers
   const handleUsername = (e) => {e.preventDefault();setUsername(e.target.value);}
   const handleFirstname = (e) => {e.preventDefault();setFirstname(e.target.value);}
   const handleLastname = (e) => {e.preventDefault();setLastname(e.target.value);}
   const handleEmail = (e) => {e.preventDefault();setEmail(e.target.value);}
   const handlePassword = (e) => {e.preventDefault();setPassword(e.target.value);}
-
+  //JSX
   return (
     <div className='login-register'>
       <div className='title-box'><a href='/'>GAMEABLE</a></div>

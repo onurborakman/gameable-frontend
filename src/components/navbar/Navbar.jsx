@@ -4,6 +4,7 @@ import Footer from '../footer/Footer';
 import { AuthNavbar } from '../login/Authentication';
 
 export default function Navbar() {
+  //JSX
   return (
       <React.Fragment>
           <AuthNavbar/>

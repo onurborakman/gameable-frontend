@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import Feedback from './Feedback';
 
 const Footer = () => {
-
-    const [modal, setModal] = useState(false);
-
+  //state
+  const [modal, setModal] = useState(false);
+  //jsx
   return (
     <div>
         {modal && <Feedback setModal={setModal}/>}

@@ -46,9 +46,10 @@ export default function Profile() {
   //Listen Edit Button
   const handleEdit = (e) => {
     e.preventDefault();
+    //navigate to edit page
     navigate('/profile/edit');
   }
-
+  //JSX
   return (
     <div className='profile'>
       <video autoPlay loop muted playsInline>

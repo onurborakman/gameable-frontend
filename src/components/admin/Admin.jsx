@@ -1,30 +1,44 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react'
-import {useAuth} from '../login/Authentication'
+import {apikey, useAuth} from '../login/Authentication'
 import Modal from './Modal';
 import HomeVideo3 from '../../assets/videos/home3.mp4';
 
 export default function Admin() {
+  //authenticated user
   let auth = useAuth();
+  //states
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
   const [modal, setModal] = useState(false);
+  //use effect to refresh the list and listen for users change
   useEffect(()=>{
       getUsers();
   }, [users])
+  //function to get the users
   const getUsers = async() =>{
-    const data = await axios.get(`https://gameable-api.herokuapp.com/api/user/all`);
+    //await axios get request
+    const data = await axios.get(`https://gameable-api.herokuapp.com/api/user/all`, {}, apikey);
+    //get the list of users
     const list = await data.data.data;
+    //set the state
     setUsers(list);
   }
+  //function to delete user by id
   const deleteUser = async(id) => {
-    await axios.delete(`https://gameable-api.herokuapp.com/api/user/delete/${id}`);
+    //await axios delete request
+    await axios.delete(`https://gameable-api.herokuapp.com/api/user/delete/${id}`, {}, apikey);
+    //empty the users state which will trigger useEffect
     setUsers([]);
   }
+  //function to open edit user modal
   const editUser = (user) => {
+    //set selected user state to the selected user
     setSelectedUser(user);
+    //open modal
     setModal(true);
   }
+  //function to create cards for each user
   const userList = () => {
     return users.map(user=>{
       if(user.username !== 'admin' && user.password !== 'adminadmin'){
@@ -47,12 +61,12 @@ export default function Admin() {
       
     })
   }
-
+  //properties for modal
   const modalProps = {
     setModal: setModal,
     selectedUser: selectedUser
   }
-
+  //calculate the percentage for the first question
   const firstQuestionPercentages = () => {
     let good = 0;
     let neutral = 0;
@@ -80,7 +94,7 @@ export default function Admin() {
       </div>
     )
   }
-
+  //calculate the percentages for the second question
   const secondQuestionPercentages = () => {
     let good = 0;
     let neutral = 0;
@@ -108,7 +122,7 @@ export default function Admin() {
       </div>
     )
   }
-
+  //jsx
   return (
     <div className='admin'>
       <video autoPlay loop muted playsInline>

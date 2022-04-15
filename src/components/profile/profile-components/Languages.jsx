@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Languages = (props) => {
+  //JSX
   return (
     <>
         <p>Primary Language: {props.languages[0] || 'Not Specified'}</p>
