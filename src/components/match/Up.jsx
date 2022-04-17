@@ -135,7 +135,7 @@ const Up = () => {
             <div className='user-card'>
                 <div><h2>{user.username}</h2>
                 <h4>{user.firstname} {user.lastname}</h4>
-                <h5>{user.birthdate && getAge(user.birthdate)} years old {user.nationality}</h5>
+                <h5>{user.birthdate.trim() !== '' && getAge(user.birthdate) + 'years old' + user.nationality}</h5>
                 </div>
                 <div className='languages'>
                 {
