@@ -10,6 +10,7 @@ import Origin from '../../assets/origin.png';
 import Uplay from '../../assets/uplay.png';
 import Playstation from '../../assets/psn.png';
 import Xbox from '../../assets/xbox.png';
+import Modal from './Modal';
 const Up = () => {
     //authenticated user
     const auth = useAuth();
@@ -18,6 +19,9 @@ const Up = () => {
     //states
     const [userList, setUserList] = useState([]);
     const [sliceCount, setSliceCount] = useState(10);
+    //modal states
+    const [openModal, setOpenModal] = useState(false);
+    const [selectedUserBio, setSelectedUserBio] = useState('');
     //use of useEffects to keep the system in real-time
     useEffect(()=>{
         //listen for user for beforeunload event
@@ -133,9 +137,10 @@ const Up = () => {
     const users = userList.map(user=>{
         return(
             <div className='user-card'>
-                <div><h2>{user.username}</h2>
+                <div><h2>{user.username}<button className='info-button' onClick={()=>{setSelectedUserBio(user.bio);setOpenModal(true)}}>
+                    🛈</button></h2>
                 <h4>{user.firstname} {user.lastname}</h4>
-                <h5>{user.birthdate.trim() !== '' && getAge(user.birthdate) + 'years old' + user.nationality}</h5>
+                <h5>{user.birthdate.trim() !== '' && getAge(user.birthdate) + 'years old ' + user.nationality}</h5>
                 </div>
                 <div className='languages'>
                 {
@@ -183,6 +188,11 @@ const Up = () => {
             )
         }
     }
+    //modal props
+    const modalProps = {
+        setOpenModal: setOpenModal,
+        selectedUserBio: selectedUserBio
+    }
     //JSX
   return (
       <div className='up'>
@@ -192,6 +202,7 @@ const Up = () => {
           <div className='overlay'></div>
           <div className='refresh-container'><button onClick={refresh}>Refresh</button></div>
           {usersJSX()}
+          {openModal && <Modal {...modalProps}/>}
       </div>
   )
 }
