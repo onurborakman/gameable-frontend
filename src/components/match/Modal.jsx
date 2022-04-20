@@ -1,7 +1,9 @@
 import React from 'react'
 
 const Modal = (props) => {
+    //props
     const {setOpenModal, selectedUserBio} = props;
+    //jsx
   return (
       <div className='modal-background'><div className='modal-box'>
           <div className='title-button'><button onClick={() => setOpenModal(false)}>X</button></div>

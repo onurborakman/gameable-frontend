@@ -3,34 +3,36 @@ import { useAuth } from './Authentication';
 import BackgroundVideo from '../../assets/videos/home.mp4';
 
 export default function Login() {
-
+//states
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [message, setMessage] = useState('');
-
+//authenticated user
   let auth = useAuth();
-
+//log the user
   const handleLogin = (e) => {
     e.preventDefault();
+    //get user input
     let user = {
       username: username,
       password: password
     }
+    //log the user
     auth.login(user, (newUser)=>{
       setMessage(newUser);
     })
   }
-
+//function to keep state up to date with user input
   const handleUsername = (e) => {
     e.preventDefault();
     setUsername(e.target.value);
   }
-
+//function to keep state up to date with user input
   const handlePassword = (e) => {
     e.preventDefault();
     setPassword(e.target.value);
   }
-
+//jsx
   return (
     <div className='login-register'>
       <div className='title-box'><a href='/'>GAMEABLE</a></div>
